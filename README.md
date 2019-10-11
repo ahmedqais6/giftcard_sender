@@ -1,2 +1,2 @@
-# giftcard_sender
+# Giftcard Sender App
  
