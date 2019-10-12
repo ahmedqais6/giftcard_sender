@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_launch/flutter_launch.dart';
 import 'package:contact_picker/contact_picker.dart';
-import 'package:intl/intl.dart';
-// import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:intl/intl.dart'; // for date format
+import 'package:connectivity/connectivity.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -74,12 +74,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-//   getDate() {
-//   var now = new DateTime.now();
-//   var formatter = new DateFormat('yyyy-MM-dd');
-//   String formatted = formatter.format(now);
-//   print(formatted);
-// }
+  checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      Text("You Don't have a network Connection");
+    } else if (connectivityResult == ConnectivityResult.mobile) {
+      Text("You have 3G Connection");
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      Text("You have WifI Connection");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,6 +212,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     TextFormField(
+                      onChanged: (String phoneNumberController) {
+                        this.setState(() {
+                          phoneNumberController = phoneNumberController;
+                        });
+                      },
                       controller: phoneNumberController,
                       keyboardType: TextInputType.number,
                       maxLength: 11,
