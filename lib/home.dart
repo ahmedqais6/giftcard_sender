@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_launch/flutter_launch.dart';
 import 'package:contact_picker/contact_picker.dart';
+import 'package:flutter_html_view/flutter_html_view.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -170,9 +171,11 @@ class _HomeState extends State<Home> {
                           Radius.circular(14.0),
                         ),
                       ),
-                      labelText: AppLocalizations.of(context).translate('enter_phone_number'),
+                      labelText: AppLocalizations.of(context)
+                          .translate('enter_phone_number'),
                       hintText: "07xxxxxxxxx",
-                      suffixText: AppLocalizations.of(context).translate('choose_contact'),
+                      suffixText: AppLocalizations.of(context)
+                          .translate('choose_contact'),
                       suffixIcon: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: IconButton(
@@ -201,9 +204,11 @@ class _HomeState extends State<Home> {
                           Radius.circular(14.0),
                         ),
                       ),
-                      labelText: AppLocalizations.of(context).translate('enter_card_code'),
+                      labelText: AppLocalizations.of(context)
+                          .translate('enter_card_code'),
                       hintText: "XXXX-XXXX-XXXX",
-                      suffixText: AppLocalizations.of(context).translate('clear'),
+                      suffixText:
+                          AppLocalizations.of(context).translate('clear'),
                       suffixIcon: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: IconButton(
@@ -231,8 +236,10 @@ class _HomeState extends State<Home> {
                           Radius.circular(14.0),
                         ),
                       ),
-                      labelText: AppLocalizations.of(context).translate('add_note_optional'),
-                      suffixText: AppLocalizations.of(context).translate('clear'),
+                      labelText: AppLocalizations.of(context)
+                          .translate('add_note_optional'),
+                      suffixText:
+                          AppLocalizations.of(context).translate('clear'),
                       suffixIcon: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: IconButton(
@@ -328,9 +335,16 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SelectableText(
-                  " Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Note: ${noteController.text}",
+                  "${AppLocalizations.of(context).translate('your_card_type')}"
+                  " $cardType \n"
+                  "${AppLocalizations.of(context).translate('your_card_amount')}"
+                  " $cardAmount \n"
+                  "${AppLocalizations.of(context).translate('card_code')}"
+                  " ${cardCodeController.text} \n "
+                  "${AppLocalizations.of(context).translate('note')}"
+                  " ${noteController.text}",
                   style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
                   height: 20,
@@ -361,7 +375,8 @@ class _HomeState extends State<Home> {
                                 borderRadius: BorderRadius.circular(20)),
                             title: Center(
                               child: Text(
-                                AppLocalizations.of(context).translate('email_button'),
+                                AppLocalizations.of(context)
+                                    .translate('email_button'),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -377,7 +392,8 @@ class _HomeState extends State<Home> {
                                           Radius.circular(14.0),
                                         ),
                                       ),
-                                      labelText: AppLocalizations.of(context).translate('mailto'),
+                                      labelText: AppLocalizations.of(context)
+                                          .translate('mailto'),
                                       hintText: "email@email.com",
                                       //suffixText: "Clear",
                                       suffixIcon: Padding(
@@ -405,9 +421,11 @@ class _HomeState extends State<Home> {
                                         Radius.circular(14.0),
                                       ),
                                     ),
-                                    labelText: AppLocalizations.of(context).translate('subject'),
-                                    hintText: AppLocalizations.of(context).translate('email_hinttext'),
-                                   // suffixText: "Clear",
+                                    labelText: AppLocalizations.of(context)
+                                        .translate('subject'),
+                                    hintText: AppLocalizations.of(context)
+                                        .translate('email_hinttext'),
+                                    // suffixText: "Clear",
                                     suffixIcon: Padding(
                                       padding: const EdgeInsetsDirectional.only(
                                           end: 12.0),
@@ -433,7 +451,8 @@ class _HomeState extends State<Home> {
                                             Navigator.of(context).pop(),
                                         color: Colors.red,
                                         child: Text(
-                                          AppLocalizations.of(context).translate('back'),
+                                          AppLocalizations.of(context)
+                                              .translate('back'),
                                           style: TextStyle(
                                               color: Colors.lightBlue,
                                               fontWeight: FontWeight.w900,
@@ -446,7 +465,8 @@ class _HomeState extends State<Home> {
                                         onPressed: () => emailOpen(),
                                         color: Colors.red,
                                         child: Text(
-                                          AppLocalizations.of(context).translate('send_email_button'),
+                                          AppLocalizations.of(context)
+                                              .translate('send_email_button'),
                                           style: TextStyle(
                                               color: Colors.purple,
                                               fontWeight: FontWeight.w900,
@@ -486,7 +506,8 @@ class _HomeState extends State<Home> {
                                     borderRadius: BorderRadius.circular(20)),
                                 title: Center(
                                   child: Text(
-                                    AppLocalizations.of(context).translate('alert'),
+                                    AppLocalizations.of(context)
+                                        .translate('alert'),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -495,7 +516,8 @@ class _HomeState extends State<Home> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     Text(
-                                      AppLocalizations.of(context).translate('phone_number_field_empty'),
+                                      AppLocalizations.of(context).translate(
+                                          'phone_number_field_empty'),
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     SizedBox(
@@ -507,7 +529,8 @@ class _HomeState extends State<Home> {
                                               Navigator.of(context).pop(),
                                           color: Colors.red,
                                           child: Text(
-                                            AppLocalizations.of(context).translate('ok'),
+                                            AppLocalizations.of(context)
+                                                .translate('ok'),
                                             style: TextStyle(
                                                 color: Colors.lightBlue,
                                                 fontWeight: FontWeight.w900,
@@ -531,7 +554,8 @@ class _HomeState extends State<Home> {
                                     borderRadius: BorderRadius.circular(20)),
                                 title: Center(
                                   child: Text(
-                                    AppLocalizations.of(context).translate('alert'),
+                                    AppLocalizations.of(context)
+                                        .translate('alert'),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -540,7 +564,8 @@ class _HomeState extends State<Home> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     Text(
-                                      AppLocalizations.of(context).translate('card_number_field_empty'),
+                                      AppLocalizations.of(context)
+                                          .translate('card_number_field_empty'),
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     SizedBox(
@@ -552,7 +577,8 @@ class _HomeState extends State<Home> {
                                               Navigator.of(context).pop(),
                                           color: Colors.red,
                                           child: Text(
-                                            AppLocalizations.of(context).translate('ok'),
+                                            AppLocalizations.of(context)
+                                                .translate('ok'),
                                             style: TextStyle(
                                                 color: Colors.lightBlue,
                                                 fontWeight: FontWeight.w900,

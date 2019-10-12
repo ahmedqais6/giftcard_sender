@@ -4,15 +4,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'applocalizations.dart';
 
+// bool isLocaleEN = true;
+// bool isLocaleAR = false;
+
 void main() {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       supportedLocales: [
-        Locale('ar', 'AR'),
         Locale('en', 'US'),
-        
+        Locale('ar', 'IQ'),
+
+        // isLocaleEN ? Locale('en', 'US') : Locale('ar', 'AR'),
+        // isLocaleAR ? Locale('ar', 'AR') : Locale('en', 'US'),
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
