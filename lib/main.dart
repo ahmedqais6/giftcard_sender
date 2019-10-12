@@ -10,8 +10,9 @@ void main() {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       supportedLocales: [
-        Locale('en', 'US'),
         Locale('ar', 'AR'),
+        Locale('en', 'US'),
+        
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,

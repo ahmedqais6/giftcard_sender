@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text(AppLocalizations.of(context).translate('appbar')),
         actions: <Widget>[
           FlatButton(
             onPressed: () => showDialog(
@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
                               onPressed: () => Navigator.of(context).pop(),
                               color: Colors.red,
                               child: Text(
-                                "Back",
+                                AppLocalizations.of(context).translate('back'),
                                 style: TextStyle(
                                     color: Colors.lightBlue,
                                     fontWeight: FontWeight.w900,
@@ -147,7 +147,7 @@ class _HomeState extends State<Home> {
                       width: 10,
                     ),
                     Text(
-                      "Giftcard Sender",
+                      AppLocalizations.of(context).translate('app_header'),
                       style: TextStyle(fontSize: 30),
                     )
                   ],
@@ -170,7 +170,7 @@ class _HomeState extends State<Home> {
                           Radius.circular(14.0),
                         ),
                       ),
-                      labelText: "Enter Phone Number",
+                      labelText: AppLocalizations.of(context).translate('enter_phone_number'),
                       hintText: "07xxxxxxxxx",
                       suffixText: "Choose Contact",
                       suffixIcon: Padding(
@@ -201,7 +201,7 @@ class _HomeState extends State<Home> {
                           Radius.circular(14.0),
                         ),
                       ),
-                      labelText: "Enter Card Code",
+                      labelText: AppLocalizations.of(context).translate('enter_card_code'),
                       hintText: "XXXX-XXXX-XXXX",
                       suffixText: "Clear",
                       suffixIcon: Padding(
@@ -231,7 +231,7 @@ class _HomeState extends State<Home> {
                           Radius.circular(14.0),
                         ),
                       ),
-                      labelText: "Add note (Optional)",
+                      labelText: AppLocalizations.of(context).translate('add_note_optional'),
                       suffixText: "Clear",
                       suffixIcon: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
@@ -336,7 +336,7 @@ class _HomeState extends State<Home> {
                   height: 20,
                 ),
                 Text(
-                  "Hint: Long press on the text to COPY",
+                  AppLocalizations.of(context).translate('hint_text'),
                   style: TextStyle(
                       color: Colors.blue, fontWeight: FontWeight.bold),
                 )
@@ -361,7 +361,7 @@ class _HomeState extends State<Home> {
                                 borderRadius: BorderRadius.circular(20)),
                             title: Center(
                               child: Text(
-                                "Email",
+                                AppLocalizations.of(context).translate('email_button'),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -377,7 +377,7 @@ class _HomeState extends State<Home> {
                                           Radius.circular(14.0),
                                         ),
                                       ),
-                                      labelText: "Mailto",
+                                      labelText: AppLocalizations.of(context).translate('mailto'),
                                       hintText: "email@email.com",
                                       //suffixText: "Clear",
                                       suffixIcon: Padding(
@@ -405,8 +405,8 @@ class _HomeState extends State<Home> {
                                         Radius.circular(14.0),
                                       ),
                                     ),
-                                    labelText: "Subject",
-                                    hintText: "Email Subject",
+                                    labelText: AppLocalizations.of(context).translate('subject'),
+                                    hintText: AppLocalizations.of(context).translate('email_hinttext'),
                                    // suffixText: "Clear",
                                     suffixIcon: Padding(
                                       padding: const EdgeInsetsDirectional.only(
@@ -433,7 +433,7 @@ class _HomeState extends State<Home> {
                                             Navigator.of(context).pop(),
                                         color: Colors.red,
                                         child: Text(
-                                          "Back",
+                                          AppLocalizations.of(context).translate('back'),
                                           style: TextStyle(
                                               color: Colors.lightBlue,
                                               fontWeight: FontWeight.w900,
@@ -446,7 +446,7 @@ class _HomeState extends State<Home> {
                                         onPressed: () => emailOpen(),
                                         color: Colors.red,
                                         child: Text(
-                                          "Send Email",
+                                          AppLocalizations.of(context).translate('send_email_button'),
                                           style: TextStyle(
                                               color: Colors.purple,
                                               fontWeight: FontWeight.w900,
@@ -463,7 +463,7 @@ class _HomeState extends State<Home> {
                         }),
                     color: Colors.red,
                     child: Text(
-                      "Email",
+                      AppLocalizations.of(context).translate('email_button'),
                       style: TextStyle(
                           color: Colors.purple,
                           fontWeight: FontWeight.w900,
@@ -572,7 +572,7 @@ class _HomeState extends State<Home> {
                     },
                     color: Colors.red,
                     child: Text(
-                      "Whatsapp",
+                      AppLocalizations.of(context).translate('whatsapp_button'),
                       style: TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.w900,
@@ -587,7 +587,7 @@ class _HomeState extends State<Home> {
                     onPressed: () => smsOpen(),
                     color: Colors.red,
                     child: Text(
-                      "SMS",
+                      AppLocalizations.of(context).translate('sms_button'),
                       style: TextStyle(
                           color: Colors.orange,
                           fontWeight: FontWeight.w900,
