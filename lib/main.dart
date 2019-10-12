@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'applocalizations.dart';
 
-// bool isLocaleEN = true;
-// bool isLocaleAR = false;
+bool isLocaleEN = true;
+bool isLocaleAR = true;
 
 void main() {
   SystemChrome.setPreferredOrientations(
@@ -13,11 +13,12 @@ void main() {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       supportedLocales: [
-        Locale('en', 'US'),
-        Locale('ar', 'IQ'),
+        // this is the old methode, commect the bool to get back to this methode.
+        // Locale('en', 'US'),
+        // Locale('ar', 'IQ'),
 
-        // isLocaleEN ? Locale('en', 'US') : Locale('ar', 'AR'),
-        // isLocaleAR ? Locale('ar', 'AR') : Locale('en', 'US'),
+        isLocaleEN ? Locale('ar', 'IQ') : Locale('en', 'US'),
+        isLocaleAR ? Locale('en', 'US') : Locale('ar', 'IQ'),
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
