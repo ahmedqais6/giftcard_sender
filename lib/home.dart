@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_launch/flutter_launch.dart';
 import 'package:contact_picker/contact_picker.dart';
-import 'package:flutter_html_view/flutter_html_view.dart';
+import 'package:intl/intl.dart';
+// import 'package:flutter_html_view/flutter_html_view.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,14 +26,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<String> amountList = ['IQD 1000', 'IQD 2000', 'IQD 3000', 'IQD 4000'];
   List<String> messageType = ['Regular', 'Specific'];
   final ContactPicker _contactPickerBusinessLogin = new ContactPicker();
+  TabController _tabController;
 
   @override
   initState() {
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
-
-  TabController _tabController;
 
   void whatsAppOpen() async {
     await FlutterLaunch.launchWathsApp(
@@ -74,6 +74,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
+//   getDate() {
+//   var now = new DateTime.now();
+//   var formatter = new DateFormat('yyyy-MM-dd');
+//   String formatted = formatter.format(now);
+//   print(formatted);
+// }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +102,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
             ),
             Tab(
-             child: Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(Icons.account_balance_wallet),
@@ -216,7 +223,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           suffixText: AppLocalizations.of(context)
                               .translate('choose_contact'),
                           suffixIcon: Padding(
-                            padding: const EdgeInsetsDirectional.only(end: 12.0),
+                            padding:
+                                const EdgeInsetsDirectional.only(end: 12.0),
 
                             child: IconButton(
                               icon: Icon(Icons.contacts),
@@ -250,7 +258,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           suffixText:
                               AppLocalizations.of(context).translate('clear'),
                           suffixIcon: Padding(
-                            padding: const EdgeInsetsDirectional.only(end: 12.0),
+                            padding:
+                                const EdgeInsetsDirectional.only(end: 12.0),
 
                             child: IconButton(
                               icon: Icon(Icons.cancel),
@@ -282,7 +291,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           suffixText:
                               AppLocalizations.of(context).translate('clear'),
                           suffixIcon: Padding(
-                            padding: const EdgeInsetsDirectional.only(end: 12.0),
+                            padding:
+                                const EdgeInsetsDirectional.only(end: 12.0),
 
                             child: IconButton(
                               icon: Icon(Icons.cancel),
@@ -315,8 +325,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           cardType = newValue;
                         });
                       },
-                      items:
-                          cardList.map<DropdownMenuItem<String>>((String value) {
+                      items: cardList
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -420,7 +430,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   child: Text(
                                     AppLocalizations.of(context)
                                         .translate('email_button'),
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 content: Column(
@@ -435,16 +446,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               Radius.circular(14.0),
                                             ),
                                           ),
-                                          labelText: AppLocalizations.of(context)
-                                              .translate('mailto'),
+                                          labelText:
+                                              AppLocalizations.of(context)
+                                                  .translate('mailto'),
                                           hintText: "email@email.com",
 
                                           //suffixText: "Clear",
 
                                           suffixIcon: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.only(
-                                                    end: 12.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .only(end: 12.0),
 
                                             child: IconButton(
                                               icon: Icon(Icons.cancel),
@@ -518,14 +529,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             color: Colors.red,
                                             child: Text(
                                               AppLocalizations.of(context)
-                                                  .translate('send_email_button'),
+                                                  .translate(
+                                                      'send_email_button'),
                                               style: TextStyle(
                                                   color: Colors.purple,
                                                   fontWeight: FontWeight.w900,
                                                   fontSize: 15),
                                             ),
-                                            borderSide:
-                                                BorderSide(color: Colors.purple),
+                                            borderSide: BorderSide(
+                                                color: Colors.purple),
                                             shape: StadiumBorder()),
                                       ],
                                     )
@@ -535,7 +547,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             }),
                         color: Colors.red,
                         child: Text(
-                          AppLocalizations.of(context).translate('email_button'),
+                          AppLocalizations.of(context)
+                              .translate('email_button'),
                           style: TextStyle(
                               color: Colors.purple,
                               fontWeight: FontWeight.w900,
@@ -555,7 +568,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20)),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
                                     title: Center(
                                       child: Text(
                                         AppLocalizations.of(context)
@@ -568,8 +582,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         Text(
-                                          AppLocalizations.of(context).translate(
-                                              'phone_number_field_empty'),
+                                          AppLocalizations.of(context)
+                                              .translate(
+                                                  'phone_number_field_empty'),
                                           style: TextStyle(fontSize: 18),
                                         ),
                                         SizedBox(
@@ -603,7 +618,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20)),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
                                     title: Center(
                                       child: Text(
                                         AppLocalizations.of(context)
@@ -616,8 +632,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         Text(
-                                          AppLocalizations.of(context).translate(
-                                              'card_number_field_empty'),
+                                          AppLocalizations.of(context)
+                                              .translate(
+                                                  'card_number_field_empty'),
                                           style: TextStyle(fontSize: 18),
                                         ),
                                         SizedBox(
@@ -682,7 +699,50 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ],
             ),
             ListView(
-              children: <Widget>[Text("data")],
+              children: <Widget>[
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          "${AppLocalizations.of(context).translate('your_phone_number')}"
+                          " ${phoneNumberController.text}\n\n"
+                          "${AppLocalizations.of(context).translate('your_card_type')}"
+                          " $cardType \n"
+                          "${AppLocalizations.of(context).translate('your_card_amount')}"
+                          " $cardAmount \n"
+                          "${AppLocalizations.of(context).translate('card_code')}"
+                          " ${cardCodeController.text} \n"
+                          "${AppLocalizations.of(context).translate('note')}"
+                          " ${noteController.text}",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              DateFormat.yMd().add_jm().format(DateTime.now()),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             )
           ],
           controller: _tabController,
