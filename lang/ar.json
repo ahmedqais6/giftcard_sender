@@ -2,9 +2,9 @@
   "appbar": "الرئيسية",
   "app_header": "مرسل البطاقات",
   "app_info": "معلومات التطبيق",
-  "app_info_body": "تم صناعة هذا التطبيق بواسطة الفلاتر\nVersion 1.0.0",
+  "app_info_body": "تم صناعة هذا التطبيق بواسطة الفلاتر\nأصدار 1.0.0",
   "back": "رجوع",
-  "enter_Phone_Number": "ادخل رقم الهاتف",
+  "enter_phone_number": "ادخل رقم الهاتف",
   "enter_card_code": "ادخل كود البطاقة",
   "add_note_optional": "اضافة ملاحظة (أختياري)",
   "zain": "زين",
@@ -24,5 +24,11 @@
   "mailto": "ارسال الأيميل الى",
   "subject": "الموضوع",
   "email_hinttext": "اكتب موضوع الأيميل",
-  "send_email_button": "ارسال الأيميل"
+  "send_email_button": "ارسال الأيميل",
+  "choose_contact": "أختر أسم",
+  "clear": "امسح",
+  "alert": "تحذير",
+  "phone_number_field_empty": "حقل رقم الهاتف فارغ",
+  "card_number_field_empty": "حقل رقم الكود فارغ",
+  "ok": "حسناً"
 }

@@ -172,7 +172,7 @@ class _HomeState extends State<Home> {
                       ),
                       labelText: AppLocalizations.of(context).translate('enter_phone_number'),
                       hintText: "07xxxxxxxxx",
-                      suffixText: "Choose Contact",
+                      suffixText: AppLocalizations.of(context).translate('choose_contact'),
                       suffixIcon: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: IconButton(
@@ -203,7 +203,7 @@ class _HomeState extends State<Home> {
                       ),
                       labelText: AppLocalizations.of(context).translate('enter_card_code'),
                       hintText: "XXXX-XXXX-XXXX",
-                      suffixText: "Clear",
+                      suffixText: AppLocalizations.of(context).translate('clear'),
                       suffixIcon: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: IconButton(
@@ -232,7 +232,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       labelText: AppLocalizations.of(context).translate('add_note_optional'),
-                      suffixText: "Clear",
+                      suffixText: AppLocalizations.of(context).translate('clear'),
                       suffixIcon: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: IconButton(
@@ -486,7 +486,7 @@ class _HomeState extends State<Home> {
                                     borderRadius: BorderRadius.circular(20)),
                                 title: Center(
                                   child: Text(
-                                    "Alert",
+                                    AppLocalizations.of(context).translate('alert'),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -495,7 +495,7 @@ class _HomeState extends State<Home> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     Text(
-                                      "Phone number feild is empty",
+                                      AppLocalizations.of(context).translate('phone_number_field_empty'),
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     SizedBox(
@@ -507,7 +507,7 @@ class _HomeState extends State<Home> {
                                               Navigator.of(context).pop(),
                                           color: Colors.red,
                                           child: Text(
-                                            "OK",
+                                            AppLocalizations.of(context).translate('ok'),
                                             style: TextStyle(
                                                 color: Colors.lightBlue,
                                                 fontWeight: FontWeight.w900,
@@ -531,7 +531,7 @@ class _HomeState extends State<Home> {
                                     borderRadius: BorderRadius.circular(20)),
                                 title: Center(
                                   child: Text(
-                                    "Alert",
+                                    AppLocalizations.of(context).translate('alert'),
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
@@ -540,7 +540,7 @@ class _HomeState extends State<Home> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     Text(
-                                      "Card number feild is empty",
+                                      AppLocalizations.of(context).translate('card_number_field_empty'),
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     SizedBox(
@@ -552,7 +552,7 @@ class _HomeState extends State<Home> {
                                               Navigator.of(context).pop(),
                                           color: Colors.red,
                                           child: Text(
-                                            "OK",
+                                            AppLocalizations.of(context).translate('ok'),
                                             style: TextStyle(
                                                 color: Colors.lightBlue,
                                                 fontWeight: FontWeight.w900,

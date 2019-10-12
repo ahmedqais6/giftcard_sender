@@ -24,5 +24,11 @@
   "mailto": "Mailto",
   "subject": "Subject",
   "email_hinttext": "Email Subject",
-  "send_email_button": "Send Email"
+  "send_email_button": "Send Email",
+  "choose_contact": "Choose Contact",
+  "clear": "Clear",
+  "alert": "Alert",
+  "phone_number_field_empty": "Phone number field is empty",
+  "card_number_field_empty": "Card number field is empty",
+  "ok": "OK"
 }
