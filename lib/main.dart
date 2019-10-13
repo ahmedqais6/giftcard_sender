@@ -48,7 +48,7 @@ class _CustomeSplashScreenState extends State<CustomeSplashScreen> {
         'Giftcard Sender',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
       ),
-      loadingText: Text("Loading.."),
+      loadingText: Text("Loading"),
       image: Image.asset('assets/icon/giftIcon.png'),
       backgroundColor: Colors.white,
       styleTextUnderTheLoader: TextStyle(),
