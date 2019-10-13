@@ -3,6 +3,7 @@ import 'package:giftcard_sender/home.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'applocalizations.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations(
@@ -27,7 +28,32 @@ void main() {
         }
         return supportedLocales.first;
       },
-      home: Home(),
+      home: CustomeSplashScreen(),
     ));
   });
+}
+
+class CustomeSplashScreen extends StatefulWidget {
+  @override
+  _CustomeSplashScreenState createState() => _CustomeSplashScreenState();
+}
+
+class _CustomeSplashScreenState extends State<CustomeSplashScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return SplashScreen(
+      seconds: 3,
+      navigateAfterSeconds: Home(),
+      title: Text(
+        'Giftcard Sender',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+      ),
+      loadingText: Text("Loading.."),
+      image: Image.asset('assets/icon/icon.png'),
+      backgroundColor: Colors.white,
+      styleTextUnderTheLoader: TextStyle(),
+      photoSize: 100.0,
+      loaderColor: Colors.blue,
+    );
+  }
 }

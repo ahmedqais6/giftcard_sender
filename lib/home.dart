@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_launch/flutter_launch.dart';
 import 'package:contact_picker/contact_picker.dart';
-import 'package:intl/intl.dart'; // for date format
+import 'package:intl/intl.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:flushbar/flushbar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -30,6 +31,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   initState() {
+    checkConnectivity();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -77,11 +79,41 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   checkConnectivity() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
-      Text("You Don't have a network Connection");
+      Flushbar(
+        margin: EdgeInsets.all(8),
+        borderRadius: 8,
+        message: "No Network Connection",
+        icon: Icon(
+          Icons.signal_wifi_off,
+          size: 28.0,
+          color: Colors.blue[300],
+        ),
+        duration: Duration(seconds: 10),
+      )..show(context);
     } else if (connectivityResult == ConnectivityResult.mobile) {
-      Text("You have 3G Connection");
+      Flushbar(
+        margin: EdgeInsets.all(8),
+        borderRadius: 8,
+        message: "Connected to Mobile Data",
+        icon: Icon(
+          Icons.wifi_tethering,
+          size: 28.0,
+          color: Colors.blue[300],
+        ),
+        duration: Duration(seconds: 5),
+      )..show(context);
     } else if (connectivityResult == ConnectivityResult.wifi) {
-      Text("You have WifI Connection");
+      Flushbar(
+        margin: EdgeInsets.all(8),
+        borderRadius: 8,
+        message: "Connected to WiFi",
+        icon: Icon(
+          Icons.wifi,
+          size: 28.0,
+          color: Colors.blue[300],
+        ),
+        duration: Duration(seconds: 5),
+      )..show(context);
     }
   }
 
@@ -234,7 +266,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           suffixIcon: Padding(
                             padding:
                                 const EdgeInsetsDirectional.only(end: 12.0),
-
                             child: IconButton(
                               icon: Icon(Icons.contacts),
                               onPressed: () {
@@ -269,7 +300,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           suffixIcon: Padding(
                             padding:
                                 const EdgeInsetsDirectional.only(end: 12.0),
-
                             child: IconButton(
                               icon: Icon(Icons.cancel),
                               onPressed: () {
