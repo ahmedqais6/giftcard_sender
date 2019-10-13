@@ -11,7 +11,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       supportedLocales: [
         Locale('en', 'US'),
-        Locale('ar', 'AR'),
+        Locale('ar', 'IQ'),
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
