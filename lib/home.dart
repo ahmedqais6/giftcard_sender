@@ -94,7 +94,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           size: 28.0,
           color: Colors.blue[300],
         ),
-        duration: Duration(seconds: 10),
+        duration: Duration(seconds: 6),
       )..show(context);
     } else if (connectivityResult == ConnectivityResult.mobile) {
       Flushbar(
@@ -107,7 +107,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           size: 28.0,
           color: Colors.blue[300],
         ),
-        duration: Duration(seconds: 5),
+        duration: Duration(seconds: 3),
       )..show(context);
     } else if (connectivityResult == ConnectivityResult.wifi) {
       Flushbar(
@@ -120,7 +120,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           size: 28.0,
           color: Colors.blue[300],
         ),
-        duration: Duration(seconds: 5),
+        duration: Duration(seconds: 3),
       )..show(context);
     }
   }

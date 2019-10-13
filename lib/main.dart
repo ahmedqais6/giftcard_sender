@@ -49,7 +49,7 @@ class _CustomeSplashScreenState extends State<CustomeSplashScreen> {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
       ),
       loadingText: Text("Loading"),
-      image: Image.asset('assets/icon/giftIcon.png'),
+      image: Image.asset('assets/icon/giftIcon3.png'),
       backgroundColor: Colors.white,
       styleTextUnderTheLoader: TextStyle(),
       photoSize: 100.0,
