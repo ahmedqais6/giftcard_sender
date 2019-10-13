@@ -42,14 +42,14 @@ class _CustomeSplashScreenState extends State<CustomeSplashScreen> {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-      seconds: 3,
+      seconds: 2,
       navigateAfterSeconds: Home(),
       title: Text(
         'Giftcard Sender',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
       ),
       loadingText: Text("Loading.."),
-      image: Image.asset('assets/icon/icon.png'),
+      image: Image.asset('assets/icon/giftIcon.png'),
       backgroundColor: Colors.white,
       styleTextUnderTheLoader: TextStyle(),
       photoSize: 100.0,
