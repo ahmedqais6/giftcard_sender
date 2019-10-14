@@ -88,11 +88,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         flushbarPosition: FlushbarPosition.TOP,
         margin: EdgeInsets.all(8),
         borderRadius: 8,
-        message: "No Network Connection",
+        message: AppLocalizations.of(context).translate('no_network'),
         icon: Icon(
           Icons.signal_wifi_off,
           size: 28.0,
-          color: Colors.blue[300],
+          color: Colors.red[300],
         ),
         duration: Duration(seconds: 6),
       )..show(context);
@@ -101,11 +101,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         flushbarPosition: FlushbarPosition.TOP,
         margin: EdgeInsets.all(8),
         borderRadius: 8,
-        message: "Connected to Mobile Data",
+        message: AppLocalizations.of(context).translate('connected_mobiledata'),
         icon: Icon(
           Icons.wifi_tethering,
           size: 28.0,
-          color: Colors.blue[300],
+          color: Colors.green[300],
         ),
         duration: Duration(seconds: 3),
       )..show(context);
@@ -114,11 +114,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         flushbarPosition: FlushbarPosition.TOP,
         margin: EdgeInsets.all(8),
         borderRadius: 8,
-        message: "Connected to WiFi",
+        message: AppLocalizations.of(context).translate('connected_wifi'),
         icon: Icon(
           Icons.wifi,
           size: 28.0,
-          color: Colors.blue[300],
+          color: Colors.green[300],
         ),
         duration: Duration(seconds: 3),
       )..show(context);
@@ -132,11 +132,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         flushbarPosition: FlushbarPosition.TOP,
         margin: EdgeInsets.all(8),
         borderRadius: 8,
-        message: "No Network Connection",
+        message: AppLocalizations.of(context).translate('no_network'),
         icon: Icon(
           Icons.signal_wifi_off,
           size: 28.0,
-          color: Colors.blue[300],
+          color: Colors.red[300],
         ),
         duration: Duration(seconds: 10),
       )..show(context);
@@ -159,7 +159,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("Send")
+                  Text(AppLocalizations.of(context).translate('send'))
                 ],
               ),
             ),
@@ -171,7 +171,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("Transaction")
+                  Text(AppLocalizations.of(context).translate('transaction'))
                 ],
               ),
             ),

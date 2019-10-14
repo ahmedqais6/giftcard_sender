@@ -45,10 +45,13 @@ class _CustomeSplashScreenState extends State<CustomeSplashScreen> {
       seconds: 2,
       navigateAfterSeconds: Home(),
       title: Text(
-        'Giftcard Sender',
+        AppLocalizations.of(context).translate('app_header'),
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
       ),
-      loadingText: Text("Loading"),
+      loadingText: Text(
+        AppLocalizations.of(context).translate('loading'),
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       image: Image.asset('assets/icon/giftIcon3.png'),
       backgroundColor: Colors.white,
       styleTextUnderTheLoader: TextStyle(),

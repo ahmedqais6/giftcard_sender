@@ -31,5 +31,11 @@
   "alert": "Alert",
   "phone_number_field_empty": "Phone number or card field is empty",
   "card_number_field_empty": "Card number field is empty",
-  "ok": "OK"
+  "ok": "OK",
+  "transaction": "Transaction",
+  "send": "Send",
+  "no_network": "No Network Connection",
+  "connected_mobiledata": "Connected to Mobile Data",
+  "connected_wifi": "Connected to WiFi",
+  "loading": "Loading"
 }
