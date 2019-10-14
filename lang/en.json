@@ -29,7 +29,7 @@
   "choose_contact": "Choose Contact",
   "clear": "Clear",
   "alert": "Alert",
-  "phone_number_field_empty": "Phone number field is empty",
+  "phone_number_field_empty": "Phone number or card field is empty",
   "card_number_field_empty": "Card number field is empty",
   "ok": "OK"
 }
