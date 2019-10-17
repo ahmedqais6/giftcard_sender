@@ -37,5 +37,6 @@
   "no_network": "لا يوجد اتصال بالشبكة",
   "connected_mobiledata": "متصل بشبكة الهاتف الجوال",
   "connected_wifi": "متصل بشبكة الواي فاي",
-  "loading": "تحميل"
+  "loading": "تحميل",
+  "open_wifi": "اعدادات الواي فاي"
 }

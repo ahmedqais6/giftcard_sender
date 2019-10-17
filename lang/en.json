@@ -37,5 +37,6 @@
   "no_network": "No Network Connection",
   "connected_mobiledata": "Connected to Mobile Data",
   "connected_wifi": "Connected to WiFi",
-  "loading": "Loading"
+  "loading": "Loading",
+  "open_wifi": "WiFi Settings"
 }
