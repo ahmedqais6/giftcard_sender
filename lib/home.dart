@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'applocalizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,6 +35,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   initState() {
     checkConnectivity();
     _tabController = TabController(length: 2, vsync: this);
+    // Shared Preference
+    getPhoneControllerData().then(phoneControllerTrans);
+    getCardTypeData().then(cardTypeTrans);
+    getCardAmountData().then(cardAmountTrans);
+    getCardControllerData().then(cardControllerTrans);
+    getNoteControllerPrefeData().then(noteControllerTrans);
     super.initState();
   }
 
@@ -177,6 +184,95 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         duration: Duration(seconds: 6),
       )..show(context);
     }
+  }
+
+// Shared Preferences start here.
+  Future<String> saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(
+        'phoneControllerPrefeValue', "${phoneNumberController.text}");
+    prefs.setString('cardTypePrefeValue', "$cardType");
+    prefs.setString('cardAmountPrefeValue', "$cardAmount");
+    prefs.setString('cardControllerPrefeValue', "${cardCodeController.text}");
+    prefs.setString('noteControllerPrefeValue', "${noteController.text}");
+  }
+
+  Future<String> removeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("phoneControllerPrefeValue");
+    prefs.remove("cardTypePrefeValue");
+    prefs.remove("cardAmountPrefeValue");
+    prefs.remove("cardControllerPrefeValue");
+    prefs.remove("noteControllerPrefeValue");
+  }
+
+  Future<String> getPhoneControllerData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String phoneControllerPrefeValue =
+        prefs.getString('phoneControllerPrefeValue');
+    return phoneControllerPrefeValue;
+  }
+
+  Future<String> getCardTypeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cardTypePrefeValue = prefs.getString('cardTypePrefeValue');
+    return cardTypePrefeValue;
+  }
+
+  Future<String> getCardAmountData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cardAmountPrefeValue = prefs.getString('cardAmountPrefeValue');
+    return cardAmountPrefeValue;
+  }
+
+  Future<String> getCardControllerData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cardControllerPrefeValue =
+        prefs.getString('cardControllerPrefeValue');
+    return cardControllerPrefeValue;
+  }
+
+  Future<String> getNoteControllerPrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String noteControllerPrefeValue =
+        prefs.getString('noteControllerPrefeValue');
+    return noteControllerPrefeValue;
+  }
+
+  String phoneControllerPrefe;
+  String cardTypePrefe;
+  String cardAmountPrefe;
+  String cardControllerPrefe;
+  String noteControllerPrefe;
+
+  void phoneControllerTrans(String phoneControllerPrefeValue) {
+    setState(() {
+      phoneControllerPrefe = phoneControllerPrefeValue;
+    });
+  }
+
+  void cardTypeTrans(String cardTypePrefeValue) {
+    setState(() {
+      cardTypePrefe = cardTypePrefeValue;
+    });
+  }
+
+  void cardAmountTrans(String cardAmountPrefeValue) {
+    setState(() {
+      cardAmountPrefe = cardAmountPrefeValue;
+    });
+  }
+
+  void cardControllerTrans(String cardControllerPrefeValue) {
+    setState(() {
+      cardControllerPrefe = cardControllerPrefeValue;
+    });
+  }
+
+  void noteControllerTrans(String noteControllerPrefeValue) {
+    setState(() {
+      noteControllerPrefe = noteControllerPrefeValue;
+    });
   }
 
   @override
@@ -521,6 +617,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   children: <Widget>[
                     OutlineButton(
                         onPressed: () async {
+                          saveData();
                           var connectivityResult =
                               await (Connectivity().checkConnectivity());
                           if (connectivityResult == ConnectivityResult.none) {
@@ -530,7 +627,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 child: Row(
                                   children: <Widget>[
                                     Text(
-                                      AppLocalizations.of(context).translate('open_wifi'),
+                                      AppLocalizations.of(context)
+                                          .translate('open_wifi'),
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     SizedBox(
@@ -706,6 +804,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                     OutlineButton(
                         onPressed: () async {
+                          saveData();
                           var connectivityResult =
                               await (Connectivity().checkConnectivity());
                           if (connectivityResult == ConnectivityResult.none) {
@@ -715,7 +814,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 child: Row(
                                   children: <Widget>[
                                     Text(
-                                      AppLocalizations.of(context).translate('open_wifi'),
+                                      AppLocalizations.of(context)
+                                          .translate('open_wifi'),
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     SizedBox(
@@ -808,7 +908,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       width: 30,
                     ),
                     OutlineButton(
-                        onPressed: () => smsOpen(),
+                        onPressed: () {
+                          saveData();
+                          smsOpen();
+                        },
                         color: Colors.red,
                         child: Text(
                           AppLocalizations.of(context).translate('sms_button'),
@@ -838,15 +941,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
                           "${AppLocalizations.of(context).translate('your_phone_number')}"
-                          " ${phoneNumberController.text}\n\n"
+                          " $phoneControllerPrefe\n\n"
                           "${AppLocalizations.of(context).translate('your_card_type')}"
-                          " $cardType \n"
+                          " $cardAmountPrefe \n"
                           "${AppLocalizations.of(context).translate('your_card_amount')}"
-                          " $cardAmount \n"
+                          " $cardAmountPrefe \n"
                           "${AppLocalizations.of(context).translate('card_code')}"
-                          " ${cardCodeController.text} \n"
+                          " $cardControllerPrefe \n"
                           "${AppLocalizations.of(context).translate('note')}"
-                          " ${noteController.text}",
+                          " $noteControllerPrefe",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
