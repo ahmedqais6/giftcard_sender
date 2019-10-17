@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'applocalizations.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TextEditingController noteController = TextEditingController();
   TextEditingController mailtoController = TextEditingController();
   TextEditingController subjectController = TextEditingController();
+  TextEditingController pinNumberController = TextEditingController();
   List<String> cardList = ['Zain', 'Asia', 'Korek', 'Switch'];
   List<String> amountList = ['IQD 1000', 'IQD 2000', 'IQD 3000', 'IQD 4000'];
   List<String> messageType = ['Regular', 'Specific'];
@@ -41,6 +44,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     getCardAmountData().then(cardAmountTrans);
     getCardControllerData().then(cardControllerTrans);
     getNoteControllerPrefeData().then(noteControllerTrans);
+    getDatePrefeData().then(getDateTrans);
     super.initState();
   }
 
@@ -87,6 +91,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void openWiFiSetting() {
     AppSettings.openWIFISettings();
   }
+
+  bool isClearCaches = true;
 
   checkConnectivity() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -186,6 +192,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
+
+  refreshPage() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Home()));
+  }
+
 // Shared Preferences start here.
   Future<String> saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -195,6 +207,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.setString('cardAmountPrefeValue', "$cardAmount");
     prefs.setString('cardControllerPrefeValue', "${cardCodeController.text}");
     prefs.setString('noteControllerPrefeValue', "${noteController.text}");
+    prefs.setString('getDatePrefeValue', "$getDate");
   }
 
   Future<String> removeData() async {
@@ -204,6 +217,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.remove("cardAmountPrefeValue");
     prefs.remove("cardControllerPrefeValue");
     prefs.remove("noteControllerPrefeValue");
+    prefs.remove("getDatePrefeValue");
   }
 
   Future<String> getPhoneControllerData() async {
@@ -239,6 +253,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return noteControllerPrefeValue;
   }
 
+  Future<String> getDatePrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String getDatePrefeValue = prefs.getString('getDatePrefeValue');
+    return getDatePrefeValue;
+  }
+
+  String getDate = (DateFormat.yMd().add_jm().format(DateTime.now()));
+  String getDatePrefe;
   String phoneControllerPrefe;
   String cardTypePrefe;
   String cardAmountPrefe;
@@ -272,6 +294,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void noteControllerTrans(String noteControllerPrefeValue) {
     setState(() {
       noteControllerPrefe = noteControllerPrefeValue;
+    });
+  }
+
+  void getDateTrans(String getDatePrefeValue) {
+    setState(() {
+      getDatePrefe = getDatePrefeValue;
     });
   }
 
@@ -686,14 +714,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                   AppLocalizations.of(context)
                                                       .translate('mailto'),
                                               hintText: "email@email.com",
-
-                                              //suffixText: "Clear",
-
                                               suffixIcon: Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
                                                         .only(end: 12.0),
-
                                                 child: IconButton(
                                                   icon: Icon(Icons.cancel),
                                                   onPressed: () {
@@ -715,22 +739,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                 Radius.circular(14.0),
                                               ),
                                             ),
-
                                             labelText:
                                                 AppLocalizations.of(context)
                                                     .translate('subject'),
-
                                             hintText: AppLocalizations.of(
                                                     context)
                                                 .translate('email_hinttext'),
-
-                                            // suffixText: "Clear",
-
                                             suffixIcon: Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
                                                       .only(end: 12.0),
-
                                               child: IconButton(
                                                 icon: Icon(Icons.cancel),
                                                 onPressed: () {
@@ -939,11 +957,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(20.0),
-                        child: Text(
+                        child: SelectableText(
                           "${AppLocalizations.of(context).translate('your_phone_number')}"
                           " $phoneControllerPrefe\n\n"
                           "${AppLocalizations.of(context).translate('your_card_type')}"
-                          " $cardAmountPrefe \n"
+                          " $cardTypePrefe \n"
                           "${AppLocalizations.of(context).translate('your_card_amount')}"
                           " $cardAmountPrefe \n"
                           "${AppLocalizations.of(context).translate('card_code')}"
@@ -961,7 +979,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Text(
-                              DateFormat.yMd().add_jm().format(DateTime.now()),
+                              "$getDatePrefe",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontStyle: FontStyle.italic,
@@ -972,6 +990,137 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    OutlineButton(
+                        onPressed: () {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  title: Center(
+                                    child: Text(
+                                      "Alert",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text(
+                                        "Please enter the PIN code to clear the cashes",
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      TextFormField(
+                                        onChanged:
+                                            (String pinNumberController) {
+                                          this.setState(() {
+                                            pinNumberController =
+                                                pinNumberController;
+                                          });
+                                        },
+                                        controller: pinNumberController,
+                                        keyboardType: TextInputType.number,
+                                        maxLength: 4,
+                                        decoration: new InputDecoration(
+                                          border: new OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(14.0),
+                                            ),
+                                          ),
+                                          labelText: "Please Enter PIN",
+                                          hintText: "XXXX",
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          OutlineButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              color: Colors.red,
+                                              child: Text(
+                                                AppLocalizations.of(context)
+                                                    .translate('back'),
+                                                style: TextStyle(
+                                                    color: Colors.lightBlue,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 15),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.lightBlue),
+                                              shape: StadiumBorder()),
+                                          OutlineButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (pinNumberController
+                                                          .text ==
+                                                      "0000") {
+                                                    removeData();
+
+                                                    pinNumberController.text =
+                                                        "";
+                                                    refreshPage();
+                                                  }
+                                                });
+                                              },
+                                              color: Colors.red,
+                                              child: Text(
+                                                AppLocalizations.of(context)
+                                                    .translate('ok'),
+                                                style: TextStyle(
+                                                    color: Colors.lightBlue,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 15),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.lightBlue),
+                                              shape: StadiumBorder()),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
+                        color: Colors.red,
+                        child: Text(
+                          "Clear Cashe",
+                          style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18),
+                        ),
+                        borderSide: BorderSide(color: Colors.blueAccent),
+                        shape: StadiumBorder()),
+                    OutlineButton(
+                        onPressed: () async{
+                          refreshPage();
+                        },
+                        color: Colors.red,
+                        child: Text(
+                          "Refresh Page",
+                          style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18),
+                        ),
+                        borderSide: BorderSide(color: Colors.blueAccent),
+                        shape: StadiumBorder()),
+                  ],
                 )
               ],
             )
