@@ -29,7 +29,14 @@
   "choose_contact": "أختر أسم",
   "clear": "امسح",
   "alert": "تحذير",
-  "phone_number_field_empty": "حقل رقم الهاتف فارغ",
+  "phone_number_field_empty": "حقل رقم الهاتف او الكود فارغ",
   "card_number_field_empty": "حقل رقم الكود فارغ",
-  "ok": "حسناً"
+  "ok": "حسناً",
+  "transaction": "العمليات التجارية",
+  "send": "أرسال",
+  "no_network": "لا يوجد اتصال بالشبكة",
+  "connected_mobiledata": "متصل بشبكة الهاتف الجوال",
+  "connected_wifi": "متصل بشبكة الواي فاي",
+  "loading": "تحميل",
+  "open_wifi": "اعدادات الواي فاي"
 }

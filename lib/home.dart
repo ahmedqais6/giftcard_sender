@@ -77,7 +77,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  openWiFiSetting() {
+  void openWiFiSetting() {
     AppSettings.openWIFISettings();
   }
 
@@ -85,14 +85,32 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       Flushbar(
+        mainButton: FlatButton(
+          onPressed: () => openWiFiSetting(),
+          child: Row(
+            children: <Widget>[
+              Text(
+                AppLocalizations.of(context).translate('open_wifi'),
+                style: TextStyle(color: Colors.white),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
         flushbarPosition: FlushbarPosition.TOP,
         margin: EdgeInsets.all(8),
         borderRadius: 8,
-        message: "No Network Connection",
+        message: AppLocalizations.of(context).translate('no_network'),
         icon: Icon(
           Icons.signal_wifi_off,
           size: 28.0,
-          color: Colors.blue[300],
+          color: Colors.red[300],
         ),
         duration: Duration(seconds: 6),
       )..show(context);
@@ -101,11 +119,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         flushbarPosition: FlushbarPosition.TOP,
         margin: EdgeInsets.all(8),
         borderRadius: 8,
-        message: "Connected to Mobile Data",
+        message: AppLocalizations.of(context).translate('connected_mobiledata'),
         icon: Icon(
           Icons.wifi_tethering,
           size: 28.0,
-          color: Colors.blue[300],
+          color: Colors.green[300],
         ),
         duration: Duration(seconds: 3),
       )..show(context);
@@ -114,11 +132,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         flushbarPosition: FlushbarPosition.TOP,
         margin: EdgeInsets.all(8),
         borderRadius: 8,
-        message: "Connected to WiFi",
+        message: AppLocalizations.of(context).translate('connected_wifi'),
         icon: Icon(
           Icons.wifi,
           size: 28.0,
-          color: Colors.blue[300],
+          color: Colors.green[300],
         ),
         duration: Duration(seconds: 3),
       )..show(context);
@@ -129,16 +147,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       Flushbar(
+        mainButton: FlatButton(
+          onPressed: () => openWiFiSetting(),
+          child: Row(
+            children: <Widget>[
+              Text(
+                AppLocalizations.of(context).translate('open_wifi'),
+                style: TextStyle(color: Colors.white),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
         flushbarPosition: FlushbarPosition.TOP,
         margin: EdgeInsets.all(8),
         borderRadius: 8,
-        message: "No Network Connection",
+        message: AppLocalizations.of(context).translate('no_network'),
         icon: Icon(
           Icons.signal_wifi_off,
           size: 28.0,
-          color: Colors.blue[300],
+          color: Colors.red[300],
         ),
-        duration: Duration(seconds: 10),
+        duration: Duration(seconds: 6),
       )..show(context);
     }
   }
@@ -159,7 +195,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("Send")
+                  Text(AppLocalizations.of(context).translate('send'))
                 ],
               ),
             ),
@@ -171,7 +207,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("Transaction")
+                  Text(AppLocalizations.of(context).translate('transaction'))
                 ],
               ),
             ),
@@ -489,16 +525,35 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               await (Connectivity().checkConnectivity());
                           if (connectivityResult == ConnectivityResult.none) {
                             Flushbar(
+                              mainButton: FlatButton(
+                                onPressed: () => openWiFiSetting(),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      AppLocalizations.of(context).translate('open_wifi'),
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(
+                                      Icons.settings,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              ),
                               flushbarPosition: FlushbarPosition.TOP,
                               margin: EdgeInsets.all(8),
                               borderRadius: 8,
-                              message: "No Network Connection",
+                              message: AppLocalizations.of(context)
+                                  .translate('no_network'),
                               icon: Icon(
                                 Icons.signal_wifi_off,
                                 size: 28.0,
-                                color: Colors.blue[300],
+                                color: Colors.red[300],
                               ),
-                              duration: Duration(seconds: 10),
+                              duration: Duration(seconds: 6),
                             )..show(context);
                           } else {
                             showDialog(
@@ -655,16 +710,35 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               await (Connectivity().checkConnectivity());
                           if (connectivityResult == ConnectivityResult.none) {
                             Flushbar(
+                              mainButton: FlatButton(
+                                onPressed: () => openWiFiSetting(),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      AppLocalizations.of(context).translate('open_wifi'),
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(
+                                      Icons.settings,
+                                      color: Colors.white,
+                                    ),
+                                  ],
+                                ),
+                              ),
                               flushbarPosition: FlushbarPosition.TOP,
                               margin: EdgeInsets.all(8),
                               borderRadius: 8,
-                              message: "No Network Connection",
+                              message: AppLocalizations.of(context)
+                                  .translate('no_network'),
                               icon: Icon(
                                 Icons.signal_wifi_off,
                                 size: 28.0,
-                                color: Colors.blue[300],
+                                color: Colors.red[300],
                               ),
-                              duration: Duration(seconds: 10),
+                              duration: Duration(seconds: 6),
                             )..show(context);
                           } else if (phoneNumberController.text.isEmpty ||
                               cardCodeController.text.isEmpty) {
