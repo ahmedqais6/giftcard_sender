@@ -38,5 +38,9 @@
   "connected_mobiledata": "Connected to Mobile Data",
   "connected_wifi": "Connected to WiFi",
   "loading": "Loading",
-  "open_wifi": "WiFi Settings"
+  "open_wifi": "WiFi Settings",
+  "pin_message": "Please enter the PIN code to clear the cashes",
+  "pin_enter": "Enter PIN",
+  "clear_cash": "Clear Cashe",
+  "refresh_page": "Refresh page"
 }

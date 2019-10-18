@@ -192,7 +192,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-
   refreshPage() {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => Home()));
@@ -307,6 +306,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // to remove back button.
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
           labelColor: Colors.white,
@@ -1008,7 +1008,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       borderRadius: BorderRadius.circular(20)),
                                   title: Center(
                                     child: Text(
-                                      "Alert",
+                                      AppLocalizations.of(context)
+                                          .translate('alert'),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -1017,7 +1018,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       Text(
-                                        "Please enter the PIN code to clear the cashes",
+                                        AppLocalizations.of(context)
+                                            .translate('pin_message'),
                                         style: TextStyle(fontSize: 18),
                                       ),
                                       SizedBox(
@@ -1040,7 +1042,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               Radius.circular(14.0),
                                             ),
                                           ),
-                                          labelText: "Please Enter PIN",
+                                          labelText:
+                                              AppLocalizations.of(context)
+                                                  .translate('pin_enter'),
                                           hintText: "XXXX",
                                         ),
                                       ),
@@ -1098,7 +1102,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         },
                         color: Colors.red,
                         child: Text(
-                          "Clear Cashe",
+                          AppLocalizations.of(context).translate('clear_cash'),
                           style: TextStyle(
                               color: Colors.blueAccent,
                               fontWeight: FontWeight.w900,
@@ -1107,12 +1111,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         borderSide: BorderSide(color: Colors.blueAccent),
                         shape: StadiumBorder()),
                     OutlineButton(
-                        onPressed: () async{
+                        onPressed: () async {
                           refreshPage();
                         },
                         color: Colors.red,
                         child: Text(
-                          "Refresh Page",
+                          AppLocalizations.of(context)
+                              .translate('refresh_page'),
                           style: TextStyle(
                               color: Colors.blueAccent,
                               fontWeight: FontWeight.w900,
