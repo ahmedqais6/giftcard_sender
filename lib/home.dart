@@ -14,9 +14,9 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-String cardType = 'Zain';
-String cardAmount = 'IQD 1000';
-String defaultMessageType = 'Regular';
+String cardType = 'Amazon';
+String cardAmount = '\$5';
+String cardReagion = 'Region All ';
 String clearTextFeild = "";
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
@@ -26,9 +26,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TextEditingController mailtoController = TextEditingController();
   TextEditingController subjectController = TextEditingController();
   TextEditingController pinNumberController = TextEditingController();
-  List<String> cardList = ['Zain', 'Asia', 'Korek', 'Switch'];
-  List<String> amountList = ['IQD 1000', 'IQD 2000', 'IQD 3000', 'IQD 4000'];
-  List<String> messageType = ['Regular', 'Specific'];
+  List<String> cardList = [
+    'Amazon',
+    'Steam Wallet',
+    'iTunes',
+    'Google Play',
+    'PSN',
+    'xBox Live',
+    'Razer Gold',
+    'EA Acces'
+  ];
+  List<String> amountList = ['\$5', '\$10','\$15', '\$20','\$25','\$30', '\$50', '\$100'];
+  List<String> regionType = ['Region All ', 'USA', 'EU', 'UAE'];
   final ContactPicker _contactPickerBusinessLogin = new ContactPicker();
   TabController _tabController;
 
@@ -43,6 +52,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     getCardControllerData().then(cardControllerTrans);
     getNoteControllerPrefeData().then(noteControllerTrans);
     getDatePrefeData().then(getDateTrans);
+    getCardRegionPrefeData().then(getCardRegionTrans);
     super.initState();
   }
 
@@ -50,7 +60,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     await FlutterLaunch.launchWathsApp(
         phone: "+964${phoneNumberController.text}",
         message:
-            " Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Note: ${noteController.text}");
+            "Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Card Reagion: $cardReagion \n Note: ${noteController.text}");
   }
 
   void getContactPhoneNubmer(context) async {
@@ -68,7 +78,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   smsOpen() async {
     String uri =
-        'sms:+964${phoneNumberController.text}?body= Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Note: ${noteController.text}';
+        'sms:+964${phoneNumberController.text}?body= Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Card Reagion: $cardReagion \n Note: ${noteController.text}';
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
@@ -78,7 +88,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   emailOpen() async {
     var url =
-        'mailto:${mailtoController.text}?subject=${subjectController.text}&body= Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Note: ${noteController.text}';
+        'mailto:${mailtoController.text}?subject=${subjectController.text}&body= Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Card Reagion: $cardReagion \n Note: ${noteController.text}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -205,6 +215,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.setString('cardControllerPrefeValue', "${cardCodeController.text}");
     prefs.setString('noteControllerPrefeValue', "${noteController.text}");
     prefs.setString('getDatePrefeValue', "$getDate");
+    prefs.setString('cardReagionPrefeValue', "$regionType");
   }
 
   Future<String> removeData() async {
@@ -215,6 +226,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.remove("cardControllerPrefeValue");
     prefs.remove("noteControllerPrefeValue");
     prefs.remove("getDatePrefeValue");
+    prefs.remove("cardReagionPrefeValue");
   }
 
   Future<String> getPhoneControllerData() async {
@@ -256,6 +268,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return getDatePrefeValue;
   }
 
+    Future<String> getCardRegionPrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cardReagionPrefeValue = prefs.getString('cardReagionPrefeValue');
+    return cardReagionPrefeValue;
+  }
+
   String getDate = (DateFormat.yMd().add_jm().format(DateTime.now()));
   String getDatePrefe;
   String phoneControllerPrefe;
@@ -263,6 +281,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String cardAmountPrefe;
   String cardControllerPrefe;
   String noteControllerPrefe;
+  String cardReagionPrefe;
 
   void phoneControllerTrans(String phoneControllerPrefeValue) {
     setState(() {
@@ -297,6 +316,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void getDateTrans(String getDatePrefeValue) {
     setState(() {
       getDatePrefe = getDatePrefeValue;
+    });
+  }
+
+    void getCardRegionTrans(String getCardRegionPrefeData) {
+    setState(() {
+      cardReagionPrefe = getCardRegionPrefeData;
     });
   }
 
@@ -583,7 +608,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       width: 30,
                     ),
                     DropdownButton<String>(
-                      value: defaultMessageType,
+                      value: cardReagion,
                       icon: Icon(
                         Icons.arrow_drop_down_circle,
                         color: Colors.blue,
@@ -591,10 +616,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       iconSize: 24,
                       onChanged: (String newValue) {
                         setState(() {
-                          defaultMessageType = newValue;
+                          cardReagion = newValue;
                         });
                       },
-                      items: messageType
+                      items: regionType
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -617,6 +642,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       " $cardAmount \n"
                       "${AppLocalizations.of(context).translate('card_code')}"
                       " ${cardCodeController.text} \n "
+                      "${AppLocalizations.of(context).translate('card_reagion')}"
+                      " $cardReagion \n"
                       "${AppLocalizations.of(context).translate('note')}"
                       " ${noteController.text}",
                       style: TextStyle(fontSize: 20),
@@ -966,6 +993,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           " $cardAmountPrefe \n"
                           "${AppLocalizations.of(context).translate('card_code')}"
                           " $cardControllerPrefe \n"
+                          "${AppLocalizations.of(context).translate('card_reagion')}"
+                          " $cardReagion \n"
                           "${AppLocalizations.of(context).translate('note')}"
                           " $noteControllerPrefe",
                           style: TextStyle(
