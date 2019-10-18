@@ -1,3 +1,5 @@
 # Giftcard Sender App
 
-![alt text](https://i.imgur.com/r6KbRli.png " "| width=100)
+<p align="center">
+<img alt="https://i.imgur.com/r6KbRli.png" width="400"
+</p>
