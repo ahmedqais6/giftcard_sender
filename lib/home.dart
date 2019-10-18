@@ -16,7 +16,7 @@ class Home extends StatefulWidget {
 
 String cardType = 'Amazon';
 String cardAmount = '\$5';
-String cardReagion = 'Region All ';
+String cardReagion = 'Region All';
 String clearTextFeild = "";
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
@@ -36,8 +36,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     'Razer Gold',
     'EA Acces'
   ];
-  List<String> amountList = ['\$5', '\$10','\$15', '\$20','\$25','\$30', '\$50', '\$100'];
-  List<String> regionType = ['Region All ', 'USA', 'EU', 'UAE'];
+  List<String> amountList = [
+    '\$5',
+    '\$10',
+    '\$15',
+    '\$20',
+    '\$25',
+    '\$30',
+    '\$50',
+    '\$100'
+  ];
+  List<String> regionType = ['Region All', 'USA', 'EU', 'UAE'];
   final ContactPicker _contactPickerBusinessLogin = new ContactPicker();
   TabController _tabController;
 
@@ -60,7 +69,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     await FlutterLaunch.launchWathsApp(
         phone: "+964${phoneNumberController.text}",
         message:
-            "Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Card Reagion: $cardReagion \n Note: ${noteController.text}");
+            "Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}");
   }
 
   void getContactPhoneNubmer(context) async {
@@ -78,7 +87,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   smsOpen() async {
     String uri =
-        'sms:+964${phoneNumberController.text}?body= Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Card Reagion: $cardReagion \n Note: ${noteController.text}';
+        'sms:+964${phoneNumberController.text}?body=Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}';
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
@@ -88,7 +97,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   emailOpen() async {
     var url =
-        'mailto:${mailtoController.text}?subject=${subjectController.text}&body= Your Card Type is: $cardType \n Your Card Amount is: $cardAmount \n Card Code is: ${cardCodeController.text} \n Card Reagion: $cardReagion \n Note: ${noteController.text}';
+        'mailto:${mailtoController.text}?subject=${subjectController.text}&body=Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -268,7 +277,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return getDatePrefeValue;
   }
 
-    Future<String> getCardRegionPrefeData() async {
+  Future<String> getCardRegionPrefeData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String cardReagionPrefeValue = prefs.getString('cardReagionPrefeValue');
     return cardReagionPrefeValue;
@@ -319,7 +328,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
   }
 
-    void getCardRegionTrans(String getCardRegionPrefeData) {
+  void getCardRegionTrans(String getCardRegionPrefeData) {
     setState(() {
       cardReagionPrefe = getCardRegionPrefeData;
     });
@@ -445,7 +454,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                   ],
                 ),
@@ -480,7 +489,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               onPressed: () {
                                 getContactPhoneNubmer(context);
                               },
-                            ), // myIcon is a 48px-wide widget.
+                            ),
                           )),
                     ),
                     SizedBox(
@@ -514,7 +523,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               onPressed: () {
                                 cardCodeController.text = clearTextFeild;
                               },
-                            ), // myIcon is a 48px-wide widget.
+                            ),
                           )),
                     ),
                     SizedBox(
@@ -559,7 +568,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   height: 10,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     DropdownButton<String>(
                       value: cardType,
@@ -581,9 +590,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         );
                       }).toList(),
                     ),
-                    SizedBox(
-                      width: 30,
-                    ),
                     DropdownButton<String>(
                       value: cardAmount,
                       icon: Icon(
@@ -603,9 +609,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           child: Text(value),
                         );
                       }).toList(),
-                    ),
-                    SizedBox(
-                      width: 30,
                     ),
                     DropdownButton<String>(
                       value: cardReagion,
@@ -630,7 +633,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ],
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
