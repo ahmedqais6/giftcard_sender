@@ -295,42 +295,77 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void phoneControllerTrans(String phoneControllerPrefeValue) {
     setState(() {
       phoneControllerPrefe = phoneControllerPrefeValue;
+      if (phoneControllerPrefe == null) {
+        phoneControllerPrefe = clearTextFeild;
+      } else {
+        phoneControllerPrefe = phoneControllerPrefeValue;
+      }
     });
   }
 
   void cardTypeTrans(String cardTypePrefeValue) {
     setState(() {
       cardTypePrefe = cardTypePrefeValue;
+      if (cardTypePrefe == null) {
+        cardTypePrefe = clearTextFeild;
+      } else {
+        cardTypePrefe = cardTypePrefeValue;
+      }
     });
   }
 
   void cardAmountTrans(String cardAmountPrefeValue) {
     setState(() {
       cardAmountPrefe = cardAmountPrefeValue;
+      if (cardAmountPrefe == null) {
+        cardAmountPrefe = clearTextFeild;
+      } else {
+        cardAmountPrefe = cardAmountPrefeValue;
+      }
     });
   }
 
   void cardControllerTrans(String cardControllerPrefeValue) {
     setState(() {
       cardControllerPrefe = cardControllerPrefeValue;
+      if (cardControllerPrefe == null) {
+        cardControllerPrefe = clearTextFeild;
+      } else {
+        cardControllerPrefe = cardControllerPrefeValue;
+      }
     });
   }
 
   void noteControllerTrans(String noteControllerPrefeValue) {
     setState(() {
       noteControllerPrefe = noteControllerPrefeValue;
+      if (noteControllerPrefe == null) {
+        noteControllerPrefe = clearTextFeild;
+      } else {
+        noteControllerPrefe = noteControllerPrefeValue;
+      }
     });
   }
 
   void getDateTrans(String getDatePrefeValue) {
     setState(() {
       getDatePrefe = getDatePrefeValue;
+      if (getDatePrefe == null) {
+        getDatePrefe = clearTextFeild;
+      } else {
+        getDatePrefe = getDatePrefeValue;
+      }
     });
   }
 
   void getCardRegionTrans(String getCardRegionPrefeData) {
     setState(() {
       cardReagionPrefe = getCardRegionPrefeData;
+      if (cardReagionPrefe == null) {
+        cardReagionPrefe = clearTextFeild;
+      } else {
+        cardReagionPrefe = getCardRegionPrefeData;
+      }
     });
   }
 
@@ -428,6 +463,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TabBarView(
+          controller: _tabController,
           children: [
             ListView(
               children: <Widget>[
@@ -811,7 +847,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                     color: Colors.lightBlue),
                                                 shape: StadiumBorder()),
                                             OutlineButton(
-                                                onPressed: () => emailOpen(),
+                                                onPressed: () {
+                                                  emailOpen();
+                                                  Navigator.of(context).pop();
+                                                },
                                                 color: Colors.red,
                                                 child: Text(
                                                   AppLocalizations.of(context)
@@ -1158,11 +1197,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         borderSide: BorderSide(color: Colors.blueAccent),
                         shape: StadiumBorder()),
                   ],
-                )
+                ),
               ],
             )
           ],
-          controller: _tabController,
         ),
       ),
     );
