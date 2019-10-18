@@ -32,6 +32,7 @@ dependencies:
   splashscreen: ^1.2.0
   app_settings: 1.0.6+2
   pull_to_refresh: ^1.5.7
+  shimmer: ^1.0.1
   flutter_localizations:
     sdk: flutter
 
