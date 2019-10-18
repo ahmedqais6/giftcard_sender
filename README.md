@@ -1,3 +1,3 @@
 # Giftcard Sender App
 
-![alt text](https://i.imgur.com/r6KbRli.png " ")
+![](https://i.imgur.com/r6KbRli.png | width=100)
