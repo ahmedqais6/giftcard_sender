@@ -28,7 +28,7 @@
   "send_email_button": "ارسال الأيميل",
   "choose_contact": "أختر أسم",
   "clear": "امسح",
-  "alert": "تحذير",
+  "alert": "أنتبة",
   "phone_number_field_empty": "حقل رقم الهاتف او الكود فارغ",
   "card_number_field_empty": "حقل رقم الكود فارغ",
   "ok": "حسناً",
@@ -38,5 +38,9 @@
   "connected_mobiledata": "متصل بشبكة الهاتف الجوال",
   "connected_wifi": "متصل بشبكة الواي فاي",
   "loading": "تحميل",
-  "open_wifi": "اعدادات الواي فاي"
+  "open_wifi": "اعدادات الواي فاي",
+  "pin_message": "لطفاً ادخل الرقم السري لحذف السجلات",
+  "pin_enter": "ادخل الرقم السري",
+  "clear_cash": "حذف السجلات",
+  "refresh_page": "تنشيط الصفحة"
 }

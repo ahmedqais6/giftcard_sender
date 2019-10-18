@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'applocalizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,6 +25,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TextEditingController noteController = TextEditingController();
   TextEditingController mailtoController = TextEditingController();
   TextEditingController subjectController = TextEditingController();
+  TextEditingController pinNumberController = TextEditingController();
   List<String> cardList = ['Zain', 'Asia', 'Korek', 'Switch'];
   List<String> amountList = ['IQD 1000', 'IQD 2000', 'IQD 3000', 'IQD 4000'];
   List<String> messageType = ['Regular', 'Specific'];
@@ -34,6 +36,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   initState() {
     checkConnectivity();
     _tabController = TabController(length: 2, vsync: this);
+    // Shared Preference
+    getPhoneControllerData().then(phoneControllerTrans);
+    getCardTypeData().then(cardTypeTrans);
+    getCardAmountData().then(cardAmountTrans);
+    getCardControllerData().then(cardControllerTrans);
+    getNoteControllerPrefeData().then(noteControllerTrans);
+    getDatePrefeData().then(getDateTrans);
     super.initState();
   }
 
@@ -80,6 +89,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void openWiFiSetting() {
     AppSettings.openWIFISettings();
   }
+
+  bool isClearCaches = true;
 
   checkConnectivity() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -179,10 +190,121 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
+  refreshPage() {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Home()));
+  }
+
+// Shared Preferences start here.
+  Future<String> saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(
+        'phoneControllerPrefeValue', "${phoneNumberController.text}");
+    prefs.setString('cardTypePrefeValue', "$cardType");
+    prefs.setString('cardAmountPrefeValue', "$cardAmount");
+    prefs.setString('cardControllerPrefeValue', "${cardCodeController.text}");
+    prefs.setString('noteControllerPrefeValue', "${noteController.text}");
+    prefs.setString('getDatePrefeValue', "$getDate");
+  }
+
+  Future<String> removeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("phoneControllerPrefeValue");
+    prefs.remove("cardTypePrefeValue");
+    prefs.remove("cardAmountPrefeValue");
+    prefs.remove("cardControllerPrefeValue");
+    prefs.remove("noteControllerPrefeValue");
+    prefs.remove("getDatePrefeValue");
+  }
+
+  Future<String> getPhoneControllerData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String phoneControllerPrefeValue =
+        prefs.getString('phoneControllerPrefeValue');
+    return phoneControllerPrefeValue;
+  }
+
+  Future<String> getCardTypeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cardTypePrefeValue = prefs.getString('cardTypePrefeValue');
+    return cardTypePrefeValue;
+  }
+
+  Future<String> getCardAmountData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cardAmountPrefeValue = prefs.getString('cardAmountPrefeValue');
+    return cardAmountPrefeValue;
+  }
+
+  Future<String> getCardControllerData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cardControllerPrefeValue =
+        prefs.getString('cardControllerPrefeValue');
+    return cardControllerPrefeValue;
+  }
+
+  Future<String> getNoteControllerPrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String noteControllerPrefeValue =
+        prefs.getString('noteControllerPrefeValue');
+    return noteControllerPrefeValue;
+  }
+
+  Future<String> getDatePrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String getDatePrefeValue = prefs.getString('getDatePrefeValue');
+    return getDatePrefeValue;
+  }
+
+  String getDate = (DateFormat.yMd().add_jm().format(DateTime.now()));
+  String getDatePrefe;
+  String phoneControllerPrefe;
+  String cardTypePrefe;
+  String cardAmountPrefe;
+  String cardControllerPrefe;
+  String noteControllerPrefe;
+
+  void phoneControllerTrans(String phoneControllerPrefeValue) {
+    setState(() {
+      phoneControllerPrefe = phoneControllerPrefeValue;
+    });
+  }
+
+  void cardTypeTrans(String cardTypePrefeValue) {
+    setState(() {
+      cardTypePrefe = cardTypePrefeValue;
+    });
+  }
+
+  void cardAmountTrans(String cardAmountPrefeValue) {
+    setState(() {
+      cardAmountPrefe = cardAmountPrefeValue;
+    });
+  }
+
+  void cardControllerTrans(String cardControllerPrefeValue) {
+    setState(() {
+      cardControllerPrefe = cardControllerPrefeValue;
+    });
+  }
+
+  void noteControllerTrans(String noteControllerPrefeValue) {
+    setState(() {
+      noteControllerPrefe = noteControllerPrefeValue;
+    });
+  }
+
+  void getDateTrans(String getDatePrefeValue) {
+    setState(() {
+      getDatePrefe = getDatePrefeValue;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // to remove back button.
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
           labelColor: Colors.white,
@@ -521,6 +643,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   children: <Widget>[
                     OutlineButton(
                         onPressed: () async {
+                          saveData();
                           var connectivityResult =
                               await (Connectivity().checkConnectivity());
                           if (connectivityResult == ConnectivityResult.none) {
@@ -530,7 +653,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 child: Row(
                                   children: <Widget>[
                                     Text(
-                                      AppLocalizations.of(context).translate('open_wifi'),
+                                      AppLocalizations.of(context)
+                                          .translate('open_wifi'),
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     SizedBox(
@@ -588,14 +712,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                   AppLocalizations.of(context)
                                                       .translate('mailto'),
                                               hintText: "email@email.com",
-
-                                              //suffixText: "Clear",
-
                                               suffixIcon: Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
                                                         .only(end: 12.0),
-
                                                 child: IconButton(
                                                   icon: Icon(Icons.cancel),
                                                   onPressed: () {
@@ -617,22 +737,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                 Radius.circular(14.0),
                                               ),
                                             ),
-
                                             labelText:
                                                 AppLocalizations.of(context)
                                                     .translate('subject'),
-
                                             hintText: AppLocalizations.of(
                                                     context)
                                                 .translate('email_hinttext'),
-
-                                            // suffixText: "Clear",
-
                                             suffixIcon: Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
                                                       .only(end: 12.0),
-
                                               child: IconButton(
                                                 icon: Icon(Icons.cancel),
                                                 onPressed: () {
@@ -706,6 +820,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                     OutlineButton(
                         onPressed: () async {
+                          saveData();
                           var connectivityResult =
                               await (Connectivity().checkConnectivity());
                           if (connectivityResult == ConnectivityResult.none) {
@@ -715,7 +830,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 child: Row(
                                   children: <Widget>[
                                     Text(
-                                      AppLocalizations.of(context).translate('open_wifi'),
+                                      AppLocalizations.of(context)
+                                          .translate('open_wifi'),
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     SizedBox(
@@ -808,7 +924,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       width: 30,
                     ),
                     OutlineButton(
-                        onPressed: () => smsOpen(),
+                        onPressed: () {
+                          saveData();
+                          smsOpen();
+                        },
                         color: Colors.red,
                         child: Text(
                           AppLocalizations.of(context).translate('sms_button'),
@@ -836,17 +955,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(20.0),
-                        child: Text(
+                        child: SelectableText(
                           "${AppLocalizations.of(context).translate('your_phone_number')}"
-                          " ${phoneNumberController.text}\n\n"
+                          " $phoneControllerPrefe\n\n"
                           "${AppLocalizations.of(context).translate('your_card_type')}"
-                          " $cardType \n"
+                          " $cardTypePrefe \n"
                           "${AppLocalizations.of(context).translate('your_card_amount')}"
-                          " $cardAmount \n"
+                          " $cardAmountPrefe \n"
                           "${AppLocalizations.of(context).translate('card_code')}"
-                          " ${cardCodeController.text} \n"
+                          " $cardControllerPrefe \n"
                           "${AppLocalizations.of(context).translate('note')}"
-                          " ${noteController.text}",
+                          " $noteControllerPrefe",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.left,
@@ -858,7 +977,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Text(
-                              DateFormat.yMd().add_jm().format(DateTime.now()),
+                              "$getDatePrefe",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontStyle: FontStyle.italic,
@@ -869,6 +988,142 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    OutlineButton(
+                        onPressed: () {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  title: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate('alert'),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text(
+                                        AppLocalizations.of(context)
+                                            .translate('pin_message'),
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      TextFormField(
+                                        onChanged:
+                                            (String pinNumberController) {
+                                          this.setState(() {
+                                            pinNumberController =
+                                                pinNumberController;
+                                          });
+                                        },
+                                        controller: pinNumberController,
+                                        keyboardType: TextInputType.number,
+                                        maxLength: 4,
+                                        decoration: new InputDecoration(
+                                          border: new OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(14.0),
+                                            ),
+                                          ),
+                                          labelText:
+                                              AppLocalizations.of(context)
+                                                  .translate('pin_enter'),
+                                          hintText: "XXXX",
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          OutlineButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              color: Colors.red,
+                                              child: Text(
+                                                AppLocalizations.of(context)
+                                                    .translate('back'),
+                                                style: TextStyle(
+                                                    color: Colors.lightBlue,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 15),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.lightBlue),
+                                              shape: StadiumBorder()),
+                                          OutlineButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (pinNumberController
+                                                          .text ==
+                                                      "0000") {
+                                                    removeData();
+
+                                                    pinNumberController.text =
+                                                        "";
+                                                    refreshPage();
+                                                  }
+                                                });
+                                              },
+                                              color: Colors.red,
+                                              child: Text(
+                                                AppLocalizations.of(context)
+                                                    .translate('ok'),
+                                                style: TextStyle(
+                                                    color: Colors.lightBlue,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 15),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.lightBlue),
+                                              shape: StadiumBorder()),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
+                        color: Colors.red,
+                        child: Text(
+                          AppLocalizations.of(context).translate('clear_cash'),
+                          style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18),
+                        ),
+                        borderSide: BorderSide(color: Colors.blueAccent),
+                        shape: StadiumBorder()),
+                    OutlineButton(
+                        onPressed: () async {
+                          refreshPage();
+                        },
+                        color: Colors.red,
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .translate('refresh_page'),
+                          style: TextStyle(
+                              color: Colors.blueAccent,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18),
+                        ),
+                        borderSide: BorderSide(color: Colors.blueAccent),
+                        shape: StadiumBorder()),
+                  ],
                 )
               ],
             )

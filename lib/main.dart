@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:giftcard_sender/home.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'applocalizations.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'applocalizations.dart';
 
 
 void main() {
@@ -53,7 +53,7 @@ class _CustomeSplashScreenState extends State<CustomeSplashScreen> {
         AppLocalizations.of(context).translate('loading'),
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      image: Image.asset('assets/icon/giftIcon3.png'),
+      image: Image.asset('assets/icon/icon.png'),
       backgroundColor: Colors.white,
       styleTextUnderTheLoader: TextStyle(),
       photoSize: 100.0,

@@ -1,3 +1,5 @@
 # Giftcard Sender App
 
-![alt text](https://i.imgur.com/r6KbRli.png " ")
+<p align="center">
+<img src="https://github.com/ahmedqais6/giftcard_sender/blob/giftcard_dev/assets/icon/icon.png" width="400"
+</p>
