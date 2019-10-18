@@ -42,5 +42,6 @@
   "pin_message": "Please enter the PIN code to clear the cashes",
   "pin_enter": "Enter PIN",
   "clear_cash": "Clear Cashe",
-  "refresh_page": "Refresh page"
+  "refresh_page": "Refresh page",
+  "card_reagion": "Card Reagion:"
 }
