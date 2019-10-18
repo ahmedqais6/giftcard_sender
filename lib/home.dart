@@ -907,6 +907,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     ),
                                   );
                                 });
+                          } else {
+                            whatsAppOpen();
                           }
                         },
                         color: Colors.red,
