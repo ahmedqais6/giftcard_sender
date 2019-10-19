@@ -586,13 +586,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           suffixIcon: Padding(
                             padding:
                                 const EdgeInsetsDirectional.only(end: 12.0),
-
                             child: IconButton(
                               icon: Icon(Icons.cancel),
                               onPressed: () {
                                 noteController.text = clearTextFeild;
                               },
-                            ), // myIcon is a 48px-wide widget.
+                            ),
                           )),
                     ),
                     SizedBox(
@@ -708,96 +707,114 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     OutlineButton(
-                        onPressed: () async {
-                          saveData();
-                          var connectivityResult =
-                              await (Connectivity().checkConnectivity());
-                          if (connectivityResult == ConnectivityResult.none) {
-                            Flushbar(
-                              mainButton: FlatButton(
-                                onPressed: () => openWiFiSetting(),
-                                child: Row(
-                                  children: <Widget>[
-                                    Text(
+                      onPressed: () async {
+                        var connectivityResult =
+                            await (Connectivity().checkConnectivity());
+                        if (connectivityResult == ConnectivityResult.none) {
+                          Flushbar(
+                            mainButton: FlatButton(
+                              onPressed: () => openWiFiSetting(),
+                              child: Row(
+                                children: <Widget>[
+                                  Text(
+                                    AppLocalizations.of(context)
+                                        .translate('open_wifi'),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.settings,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            flushbarPosition: FlushbarPosition.TOP,
+                            margin: EdgeInsets.all(8),
+                            borderRadius: 8,
+                            message: AppLocalizations.of(context)
+                                .translate('no_network'),
+                            icon: Icon(
+                              Icons.signal_wifi_off,
+                              size: 28.0,
+                              color: Colors.red[300],
+                            ),
+                            duration: Duration(seconds: 6),
+                          )..show(context);
+                        } else if (phoneNumberController.text.isEmpty ||
+                            cardCodeController.text.isEmpty) {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  title: Center(
+                                    child: Text(
                                       AppLocalizations.of(context)
-                                          .translate('open_wifi'),
-                                      style: TextStyle(color: Colors.white),
+                                          .translate('alert'),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Icon(
-                                      Icons.settings,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              flushbarPosition: FlushbarPosition.TOP,
-                              margin: EdgeInsets.all(8),
-                              borderRadius: 8,
-                              message: AppLocalizations.of(context)
-                                  .translate('no_network'),
-                              icon: Icon(
-                                Icons.signal_wifi_off,
-                                size: 28.0,
-                                color: Colors.red[300],
-                              ),
-                              duration: Duration(seconds: 6),
-                            )..show(context);
-                          } else {
-                            showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    title: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)
-                                            .translate('email_button'),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text(
+                                        AppLocalizations.of(context).translate(
+                                            'phone_number_field_empty'),
+                                        style: TextStyle(fontSize: 18),
                                       ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Center(
+                                        child: OutlineButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(),
+                                            color: Colors.red,
+                                            child: Text(
+                                              AppLocalizations.of(context)
+                                                  .translate('ok'),
+                                              style: TextStyle(
+                                                  color: Colors.lightBlue,
+                                                  fontWeight: FontWeight.w900,
+                                                  fontSize: 15),
+                                            ),
+                                            borderSide: BorderSide(
+                                                color: Colors.lightBlue),
+                                            shape: StadiumBorder()),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                        } else {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  title: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)
+                                          .translate('email_button'),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        TextFormField(
-                                          controller: mailtoController,
-                                          keyboardType: TextInputType.text,
-                                          decoration: new InputDecoration(
-                                              border: new OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(14.0),
-                                                ),
-                                              ),
-                                              labelText:
-                                                  AppLocalizations.of(context)
-                                                      .translate('mailto'),
-                                              hintText: "email@email.com",
-                                              suffixIcon: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .only(end: 12.0),
-                                                child: IconButton(
-                                                  icon: Icon(Icons.cancel),
-                                                  onPressed: () {
-                                                    mailtoController.text =
-                                                        clearTextFeild;
-                                                  },
-                                                ), // myIcon is a 48px-wide widget.
-                                              )),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        TextFormField(
-                                          controller: subjectController,
-                                          keyboardType: TextInputType.text,
-                                          decoration: new InputDecoration(
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      TextFormField(
+                                        controller: mailtoController,
+                                        keyboardType: TextInputType.text,
+                                        decoration: new InputDecoration(
                                             border: new OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(14.0),
@@ -805,10 +822,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             ),
                                             labelText:
                                                 AppLocalizations.of(context)
-                                                    .translate('subject'),
-                                            hintText: AppLocalizations.of(
-                                                    context)
-                                                .translate('email_hinttext'),
+                                                    .translate('mailto'),
+                                            hintText: "email@email.com",
                                             suffixIcon: Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
@@ -816,74 +831,103 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               child: IconButton(
                                                 icon: Icon(Icons.cancel),
                                                 onPressed: () {
-                                                  subjectController.text =
+                                                  mailtoController.text =
                                                       clearTextFeild;
                                                 },
-                                              ), // myIcon is a 48px-wide widget.
+                                              ),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      TextFormField(
+                                        controller: subjectController,
+                                        keyboardType: TextInputType.text,
+                                        decoration: new InputDecoration(
+                                          border: new OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(14.0),
+                                            ),
+                                          ),
+                                          labelText:
+                                              AppLocalizations.of(context)
+                                                  .translate('subject'),
+                                          hintText: AppLocalizations.of(context)
+                                              .translate('email_hinttext'),
+                                          suffixIcon: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .only(end: 12.0),
+                                            child: IconButton(
+                                              icon: Icon(Icons.cancel),
+                                              onPressed: () {
+                                                subjectController.text =
+                                                    clearTextFeild;
+                                              },
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: <Widget>[
-                                            OutlineButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(),
-                                                color: Colors.red,
-                                                child: Text(
-                                                  AppLocalizations.of(context)
-                                                      .translate('back'),
-                                                  style: TextStyle(
-                                                      color: Colors.lightBlue,
-                                                      fontWeight:
-                                                          FontWeight.w900,
-                                                      fontSize: 15),
-                                                ),
-                                                borderSide: BorderSide(
-                                                    color: Colors.lightBlue),
-                                                shape: StadiumBorder()),
-                                            OutlineButton(
-                                                onPressed: () {
-                                                  emailOpen();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                color: Colors.red,
-                                                child: Text(
-                                                  AppLocalizations.of(context)
-                                                      .translate(
-                                                          'send_email_button'),
-                                                  style: TextStyle(
-                                                      color: Colors.purple,
-                                                      fontWeight:
-                                                          FontWeight.w900,
-                                                      fontSize: 15),
-                                                ),
-                                                borderSide: BorderSide(
-                                                    color: Colors.purple),
-                                                shape: StadiumBorder()),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                });
-                          }
-                        },
-                        color: Colors.red,
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .translate('email_button'),
-                          style: TextStyle(
-                              color: Colors.purple,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18),
-                        ),
-                        borderSide: BorderSide(color: Colors.purple),
-                        shape: StadiumBorder()),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          OutlineButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              color: Colors.red,
+                                              child: Text(
+                                                AppLocalizations.of(context)
+                                                    .translate('back'),
+                                                style: TextStyle(
+                                                    color: Colors.lightBlue,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 15),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.lightBlue),
+                                              shape: StadiumBorder()),
+                                          OutlineButton(
+                                              onPressed: () {
+                                                saveData();
+                                                emailOpen();
+                                                Navigator.of(context).pop();
+                                                refreshPage();
+                                              },
+                                              color: Colors.red,
+                                              child: Text(
+                                                AppLocalizations.of(context)
+                                                    .translate(
+                                                        'send_email_button'),
+                                                style: TextStyle(
+                                                    color: Colors.purple,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 15),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.purple),
+                                              shape: StadiumBorder()),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                        }
+                      },
+                      color: Colors.red,
+                      child: Text(
+                        AppLocalizations.of(context).translate('email_button'),
+                        style: TextStyle(
+                            color: Colors.purple,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18),
+                      ),
+                      borderSide: BorderSide(color: Colors.purple),
+                      shape: StadiumBorder(),
+                    ),
                     SizedBox(
                       width: 30,
                     ),
@@ -978,6 +1022,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 });
                           } else {
                             whatsAppOpen();
+                            refreshPage();
                           }
                         },
                         color: Colors.red,
@@ -997,7 +1042,62 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     OutlineButton(
                         onPressed: () {
                           saveData();
-                          smsOpen();
+                          if (phoneNumberController.text.isEmpty ||
+                              cardCodeController.text.isEmpty) {
+                            showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    title: Center(
+                                      child: Text(
+                                        AppLocalizations.of(context)
+                                            .translate('alert'),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          AppLocalizations.of(context)
+                                              .translate(
+                                                  'phone_number_field_empty'),
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Center(
+                                          child: OutlineButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              color: Colors.red,
+                                              child: Text(
+                                                AppLocalizations.of(context)
+                                                    .translate('ok'),
+                                                style: TextStyle(
+                                                    color: Colors.lightBlue,
+                                                    fontWeight: FontWeight.w900,
+                                                    fontSize: 15),
+                                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.lightBlue),
+                                              shape: StadiumBorder()),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                });
+                          } else if (phoneNumberController.text.isNotEmpty ||
+                              cardCodeController.text.isNotEmpty) {
+                            smsOpen();
+                            refreshPage();
+                          }
                         },
                         color: Colors.red,
                         child: Text(
@@ -1121,7 +1221,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           OutlineButton(
                                               onPressed: () =>
@@ -1174,21 +1274,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         color: Colors.red,
                         child: Text(
                           AppLocalizations.of(context).translate('clear_cash'),
-                          style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18),
-                        ),
-                        borderSide: BorderSide(color: Colors.blueAccent),
-                        shape: StadiumBorder()),
-                    OutlineButton(
-                        onPressed: () async {
-                          refreshPage();
-                        },
-                        color: Colors.red,
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .translate('refresh_page'),
                           style: TextStyle(
                               color: Colors.blueAccent,
                               fontWeight: FontWeight.w900,
