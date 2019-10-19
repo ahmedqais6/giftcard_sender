@@ -1166,7 +1166,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   height: 30,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     OutlineButton(
                         onPressed: () {
@@ -1221,7 +1221,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.spaceAround,
                                         children: <Widget>[
                                           OutlineButton(
                                               onPressed: () =>
