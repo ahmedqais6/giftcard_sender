@@ -109,8 +109,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     AppSettings.openWIFISettings();
   }
 
-  bool isClearCaches = true;
-
   checkConnectivity() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
@@ -435,6 +433,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         SizedBox(
                           height: 15,
                         ),
+                        Image.asset(
+                          "assets/icon/icon.png",
+                          height: 100,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "${AppLocalizations.of(context).translate('app_header')}" +
+                              " v1.0.0",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
                         Center(
                           child: OutlineButton(
                               onPressed: () => Navigator.of(context).pop(),
@@ -448,7 +461,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               ),
                               borderSide: BorderSide(color: Colors.lightBlue),
                               shape: StadiumBorder()),
-                        )
+                        ),
                       ],
                     ),
                   );
