@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:giftcard_sender/home.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:giftcard_sender/test.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'applocalizations.dart';
 
