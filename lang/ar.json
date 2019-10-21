@@ -43,5 +43,6 @@
   "pin_enter": "ادخل الرقم السري",
   "clear_cash": "حذف السجلات",
   "refresh_page": "تنشيط الصفحة",
-  "card_reagion": "دولة البطاقة:"
+  "card_reagion": "دولة البطاقة:",
+  "validator_text": "الحقل فارغ"
 }
