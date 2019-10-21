@@ -26,6 +26,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TextEditingController mailtoController = TextEditingController();
   TextEditingController subjectController = TextEditingController();
   TextEditingController pinNumberController = TextEditingController();
+
+  final clearCasheFormKey = GlobalKey<FormState>();
+  final phoneNumberFormKey = GlobalKey<FormState>();
+  final cardCodeFormKey = GlobalKey<FormState>();
+  final mailtoFormKey = GlobalKey<FormState>();
+  final emailSubjectFormKey = GlobalKey<FormState>();
+
   List<String> cardList = [
     'Amazon',
     'Steam Wallet',
@@ -83,6 +90,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         .replaceAll("+ 964", "0")
         .replaceAll(RegExp(r'\+964'), "0");
     phoneNumberController.text = tempPhoneNumber;
+    if (contact.phoneNumber.number == null) {
+      smsOpen();
+    }
   }
 
   smsOpen() async {
@@ -510,70 +520,90 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    TextFormField(
-                      onChanged: (String phoneNumberController) {
-                        this.setState(() {
-                          phoneNumberController = phoneNumberController;
-                        });
-                      },
-                      controller: phoneNumberController,
-                      keyboardType: TextInputType.number,
-                      maxLength: 11,
-                      decoration: new InputDecoration(
-                          border: new OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(14.0),
+                    Form(
+                      key: phoneNumberFormKey,
+                      child: TextFormField(
+                        onChanged: (String phoneNumberController) {
+                          this.setState(() {
+                            phoneNumberController = phoneNumberController;
+                          });
+                        },
+                        controller: phoneNumberController,
+                        keyboardType: TextInputType.number,
+                        maxLength: 11,
+                        decoration: new InputDecoration(
+                            border: new OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(14.0),
+                              ),
                             ),
-                          ),
-                          labelText: AppLocalizations.of(context)
-                              .translate('enter_phone_number'),
-                          hintText: "07xxxxxxxxx",
-                          suffixText: AppLocalizations.of(context)
-                              .translate('choose_contact'),
-                          suffixIcon: Padding(
-                            padding:
-                                const EdgeInsetsDirectional.only(end: 12.0),
-                            child: IconButton(
-                              icon: Icon(Icons.contacts),
-                              onPressed: () {
-                                getContactPhoneNubmer(context);
-                              },
-                            ),
-                          )),
+                            labelText: AppLocalizations.of(context)
+                                .translate('enter_phone_number'),
+                            hintText: "07xxxxxxxxx",
+                            suffixText: AppLocalizations.of(context)
+                                .translate('choose_contact'),
+                            suffixIcon: Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(end: 12.0),
+                              child: IconButton(
+                                icon: Icon(Icons.contacts),
+                                onPressed: () {
+                                  getContactPhoneNubmer(context);
+                                },
+                              ),
+                            )),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return AppLocalizations.of(context)
+                                .translate('validator_text');
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                      onChanged: (String cardCodeController) {
-                        this.setState(() {
-                          cardCodeController = cardCodeController;
-                        });
-                      },
-                      controller: cardCodeController,
-                      maxLength: 20,
-                      keyboardType: TextInputType.text,
-                      decoration: new InputDecoration(
-                          border: new OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(14.0),
+                    Form(
+                      key: cardCodeFormKey,
+                      child: TextFormField(
+                        onChanged: (String cardCodeController) {
+                          this.setState(() {
+                            cardCodeController = cardCodeController;
+                          });
+                        },
+                        controller: cardCodeController,
+                        maxLength: 20,
+                        keyboardType: TextInputType.text,
+                        decoration: new InputDecoration(
+                            border: new OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(14.0),
+                              ),
                             ),
-                          ),
-                          labelText: AppLocalizations.of(context)
-                              .translate('enter_card_code'),
-                          hintText: "XXXX-XXXX-XXXX",
-                          suffixText:
-                              AppLocalizations.of(context).translate('clear'),
-                          suffixIcon: Padding(
-                            padding:
-                                const EdgeInsetsDirectional.only(end: 12.0),
-                            child: IconButton(
-                              icon: Icon(Icons.cancel),
-                              onPressed: () {
-                                cardCodeController.text = clearTextFeild;
-                              },
-                            ),
-                          )),
+                            labelText: AppLocalizations.of(context)
+                                .translate('enter_card_code'),
+                            hintText: "XXXX-XXXX-XXXX",
+                            suffixText:
+                                AppLocalizations.of(context).translate('clear'),
+                            suffixIcon: Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(end: 12.0),
+                              child: IconButton(
+                                icon: Icon(Icons.cancel),
+                                onPressed: () {
+                                  cardCodeController.text = clearTextFeild;
+                                },
+                              ),
+                            )),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return AppLocalizations.of(context)
+                                .translate('validator_text');
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -723,7 +753,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       onPressed: () async {
                         var connectivityResult =
                             await (Connectivity().checkConnectivity());
-                        if (connectivityResult == ConnectivityResult.none) {
+
+                        if (phoneNumberController.text.isEmpty ||
+                            cardCodeController.text.isEmpty) {
+                          phoneNumberFormKey.currentState.validate();
+                          cardCodeFormKey.currentState.validate();
+                        } else if (connectivityResult ==
+                            ConnectivityResult.none) {
                           Flushbar(
                             mainButton: FlatButton(
                               onPressed: () => openWiFiSetting(),
@@ -756,55 +792,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             ),
                             duration: Duration(seconds: 6),
                           )..show(context);
-                        } else if (phoneNumberController.text.isEmpty ||
-                            cardCodeController.text.isEmpty) {
-                          showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  title: Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)
-                                          .translate('alert'),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text(
-                                        AppLocalizations.of(context).translate(
-                                            'phone_number_field_empty'),
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Center(
-                                        child: OutlineButton(
-                                            onPressed: () =>
-                                                Navigator.of(context).pop(),
-                                            color: Colors.red,
-                                            child: Text(
-                                              AppLocalizations.of(context)
-                                                  .translate('ok'),
-                                              style: TextStyle(
-                                                  color: Colors.lightBlue,
-                                                  fontWeight: FontWeight.w900,
-                                                  fontSize: 15),
-                                            ),
-                                            borderSide: BorderSide(
-                                                color: Colors.lightBlue),
-                                            shape: StadiumBorder()),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              });
                         } else {
                           showDialog(
                               barrierDismissible: false,
@@ -824,10 +811,52 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      TextFormField(
-                                        controller: mailtoController,
-                                        keyboardType: TextInputType.text,
-                                        decoration: new InputDecoration(
+                                      Form(
+                                        key: mailtoFormKey,
+                                        child: TextFormField(
+                                          controller: mailtoController,
+                                          keyboardType: TextInputType.text,
+                                          decoration: new InputDecoration(
+                                              border: new OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(14.0),
+                                                ),
+                                              ),
+                                              labelText:
+                                                  AppLocalizations.of(context)
+                                                      .translate('mailto'),
+                                              hintText: "email@email.com",
+                                              suffixIcon: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .only(end: 12.0),
+                                                child: IconButton(
+                                                  icon: Icon(Icons.cancel),
+                                                  onPressed: () {
+                                                    mailtoController.text =
+                                                        clearTextFeild;
+                                                  },
+                                                ),
+                                              )),
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return AppLocalizations.of(
+                                                      context)
+                                                  .translate('validator_text');
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Form(
+                                        key: emailSubjectFormKey,
+                                        child: TextFormField(
+                                          controller: subjectController,
+                                          keyboardType: TextInputType.text,
+                                          decoration: new InputDecoration(
                                             border: new OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(14.0),
@@ -835,8 +864,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             ),
                                             labelText:
                                                 AppLocalizations.of(context)
-                                                    .translate('mailto'),
-                                            hintText: "email@email.com",
+                                                    .translate('subject'),
+                                            hintText: AppLocalizations.of(
+                                                    context)
+                                                .translate('email_hinttext'),
                                             suffixIcon: Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
@@ -844,40 +875,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               child: IconButton(
                                                 icon: Icon(Icons.cancel),
                                                 onPressed: () {
-                                                  mailtoController.text =
+                                                  subjectController.text =
                                                       clearTextFeild;
                                                 },
                                               ),
-                                            )),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextFormField(
-                                        controller: subjectController,
-                                        keyboardType: TextInputType.text,
-                                        decoration: new InputDecoration(
-                                          border: new OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(14.0),
                                             ),
                                           ),
-                                          labelText:
-                                              AppLocalizations.of(context)
-                                                  .translate('subject'),
-                                          hintText: AppLocalizations.of(context)
-                                              .translate('email_hinttext'),
-                                          suffixIcon: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .only(end: 12.0),
-                                            child: IconButton(
-                                              icon: Icon(Icons.cancel),
-                                              onPressed: () {
-                                                subjectController.text =
-                                                    clearTextFeild;
-                                              },
-                                            ),
-                                          ),
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return AppLocalizations.of(
+                                                      context)
+                                                  .translate('validator_text');
+                                            }
+                                            return null;
+                                          },
                                         ),
                                       ),
                                       SizedBox(
@@ -904,10 +915,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               shape: StadiumBorder()),
                                           OutlineButton(
                                               onPressed: () {
-                                                saveData();
-                                                emailOpen();
-                                                Navigator.of(context).pop();
-                                                refreshPage();
+                                                if (mailtoController
+                                                        .text.isEmpty ||
+                                                    subjectController
+                                                        .text.isEmpty) {
+                                                  mailtoFormKey.currentState
+                                                      .validate();
+                                                  emailSubjectFormKey
+                                                      .currentState
+                                                      .validate();
+                                                } else {
+                                                  saveData();
+                                                  emailOpen();
+                                                  Navigator.of(context).pop();
+                                                  refreshPage();
+                                                }
                                               },
                                               color: Colors.red,
                                               child: Text(
@@ -949,7 +971,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           saveData();
                           var connectivityResult =
                               await (Connectivity().checkConnectivity());
-                          if (connectivityResult == ConnectivityResult.none) {
+                          if (phoneNumberController.text.isEmpty ||
+                              cardCodeController.text.isEmpty) {
+                            phoneNumberFormKey.currentState.validate();
+                            cardCodeFormKey.currentState.validate();
+                          } else if (connectivityResult ==
+                              ConnectivityResult.none) {
                             Flushbar(
                               mainButton: FlatButton(
                                 onPressed: () => openWiFiSetting(),
@@ -982,57 +1009,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               ),
                               duration: Duration(seconds: 6),
                             )..show(context);
-                          } else if (phoneNumberController.text.isEmpty ||
-                              cardCodeController.text.isEmpty) {
-                            showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    title: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)
-                                            .translate('alert'),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Text(
-                                          AppLocalizations.of(context)
-                                              .translate(
-                                                  'phone_number_field_empty'),
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Center(
-                                          child: OutlineButton(
-                                              onPressed: () =>
-                                                  Navigator.of(context).pop(),
-                                              color: Colors.red,
-                                              child: Text(
-                                                AppLocalizations.of(context)
-                                                    .translate('ok'),
-                                                style: TextStyle(
-                                                    color: Colors.lightBlue,
-                                                    fontWeight: FontWeight.w900,
-                                                    fontSize: 15),
-                                              ),
-                                              borderSide: BorderSide(
-                                                  color: Colors.lightBlue),
-                                              shape: StadiumBorder()),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                });
                           } else {
                             whatsAppOpen();
                             refreshPage();
@@ -1057,57 +1033,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           saveData();
                           if (phoneNumberController.text.isEmpty ||
                               cardCodeController.text.isEmpty) {
-                            showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    title: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)
-                                            .translate('alert'),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Text(
-                                          AppLocalizations.of(context)
-                                              .translate(
-                                                  'phone_number_field_empty'),
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        Center(
-                                          child: OutlineButton(
-                                              onPressed: () =>
-                                                  Navigator.of(context).pop(),
-                                              color: Colors.red,
-                                              child: Text(
-                                                AppLocalizations.of(context)
-                                                    .translate('ok'),
-                                                style: TextStyle(
-                                                    color: Colors.lightBlue,
-                                                    fontWeight: FontWeight.w900,
-                                                    fontSize: 15),
-                                              ),
-                                              borderSide: BorderSide(
-                                                  color: Colors.lightBlue),
-                                              shape: StadiumBorder()),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                });
-                          } else if (phoneNumberController.text.isNotEmpty ||
-                              cardCodeController.text.isNotEmpty) {
+                            phoneNumberFormKey.currentState.validate();
+                            cardCodeFormKey.currentState.validate();
+                          } else {
                             smsOpen();
                             refreshPage();
                           }
@@ -1209,27 +1137,38 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                       SizedBox(
                                         height: 15,
                                       ),
-                                      TextFormField(
-                                        onChanged:
-                                            (String pinNumberController) {
-                                          this.setState(() {
-                                            pinNumberController =
-                                                pinNumberController;
-                                          });
-                                        },
-                                        controller: pinNumberController,
-                                        keyboardType: TextInputType.number,
-                                        maxLength: 4,
-                                        decoration: new InputDecoration(
-                                          border: new OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(14.0),
+                                      Form(
+                                        key: clearCasheFormKey,
+                                        child: TextFormField(
+                                          onChanged:
+                                              (String pinNumberController) {
+                                            this.setState(() {
+                                              pinNumberController =
+                                                  pinNumberController;
+                                            });
+                                          },
+                                          controller: pinNumberController,
+                                          keyboardType: TextInputType.number,
+                                          maxLength: 4,
+                                          decoration: new InputDecoration(
+                                            border: new OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(14.0),
+                                              ),
                                             ),
+                                            labelText:
+                                                AppLocalizations.of(context)
+                                                    .translate('pin_enter'),
+                                            hintText: "XXXX",
                                           ),
-                                          labelText:
-                                              AppLocalizations.of(context)
-                                                  .translate('pin_enter'),
-                                          hintText: "XXXX",
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return AppLocalizations.of(
+                                                      context)
+                                                  .translate('validator_text');
+                                            }
+                                            return null;
+                                          },
                                         ),
                                       ),
                                       Row(
@@ -1254,11 +1193,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                           OutlineButton(
                                               onPressed: () {
                                                 setState(() {
+                                                  clearCasheFormKey.currentState
+                                                      .validate();
                                                   if (pinNumberController
                                                           .text ==
                                                       "0000") {
                                                     removeData();
-
                                                     pinNumberController.text =
                                                         "";
                                                     refreshPage();

@@ -43,5 +43,6 @@
   "pin_enter": "Enter PIN",
   "clear_cash": "Clear Cashe",
   "refresh_page": "Refresh page",
-  "card_reagion": "Card Reagion:"
+  "card_reagion": "Card Reagion:",
+  "validator_text": "Form field is empty"
 }
