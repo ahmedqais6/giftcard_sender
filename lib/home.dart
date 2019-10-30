@@ -1068,7 +1068,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: SelectableText(
-                          "${AppLocalizations.of(context).translate('your_phone_number')}"
+                          "${AppLocalizations.of(context).translate('customer_phone_number')}"
                           " $phoneControllerPrefe\n\n"
                           "${AppLocalizations.of(context).translate('your_card_type')}"
                           " $cardTypePrefe \n"
