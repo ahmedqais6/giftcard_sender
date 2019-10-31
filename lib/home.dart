@@ -232,7 +232,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.setString('cardControllerPrefeValue', "${cardCodeController.text}");
     prefs.setString('noteControllerPrefeValue', "${noteController.text}");
     prefs.setString('getDatePrefeValue', "$getDate");
-    prefs.setString('cardReagionPrefeValue', "$regionType");
+    prefs.setString('cardReagionPrefeValue', "$cardReagion");
   }
 
   Future<String> removeData() async {
@@ -1077,7 +1077,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           "${AppLocalizations.of(context).translate('card_code')}"
                           " $cardControllerPrefe \n"
                           "${AppLocalizations.of(context).translate('card_reagion')}"
-                          " $cardReagion \n"
+                          " $cardReagionPrefe \n"
                           "${AppLocalizations.of(context).translate('note')}"
                           " $noteControllerPrefe",
                           style: TextStyle(
