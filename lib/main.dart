@@ -10,7 +10,7 @@ void main() {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
-     // theme: ThemeData(fontFamily: 'Cairo'),
+      // theme: ThemeData(fontFamily: 'Cairo'),
       supportedLocales: [
         Locale('en', 'US'),
         Locale('ar', 'IQ'),
