@@ -20,12 +20,12 @@ String cardReagion = 'Region All';
 String clearTextFeild = "";
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController cardCodeController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
-  TextEditingController mailtoController = TextEditingController();
-  TextEditingController subjectController = TextEditingController();
-  TextEditingController pinNumberController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController cardCodeController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
+  final TextEditingController mailtoController = TextEditingController();
+  final TextEditingController subjectController = TextEditingController();
+  final TextEditingController pinNumberController = TextEditingController();
 
   final clearCasheFormKey = GlobalKey<FormState>();
   final phoneNumberFormKey = GlobalKey<FormState>();
@@ -233,6 +233,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.setString('noteControllerPrefeValue', "${noteController.text}");
     prefs.setString('getDatePrefeValue', "$getDate");
     prefs.setString('cardReagionPrefeValue', "$cardReagion");
+    return "Data Saved";
   }
 
   Future<String> removeData() async {
@@ -244,6 +245,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.remove("noteControllerPrefeValue");
     prefs.remove("getDatePrefeValue");
     prefs.remove("cardReagionPrefeValue");
+    return "Data Removed";
   }
 
   Future<String> getPhoneControllerData() async {
