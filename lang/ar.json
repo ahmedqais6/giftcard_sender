@@ -17,7 +17,7 @@
   "your_card_type": "نوع بطاقتك هو:",
   "your_card_amount": "مقدار البطاقة هو:",
   "card_code": "رمز البطاقة هو:",
-  "note": "ملاحظة:",
+  "note": "الملاحظات:",
   "hint_text": "اضغط مرتين على النص اعلاة للنسخ",
   "email_button": "ايميل",
   "whatsapp_button": "واتساب",
@@ -44,5 +44,8 @@
   "clear_cash": "حذف السجلات",
   "refresh_page": "تنشيط الصفحة",
   "card_reagion": "دولة البطاقة:",
-  "validator_text": "الحقل فارغ"
+  "validator_text": "الحقل فارغ",
+  "sent_whatsapp": "ارسلت بواسطة الواتساب",
+  "sent_sms": "ارسلة بواسطة رسالة نصية",
+  "sent_email": "ارسلت بواسطة البريد الألكتروني"
 }
