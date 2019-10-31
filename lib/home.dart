@@ -19,6 +19,11 @@ String cardAmount = '\$5';
 String cardReagion = 'Region All';
 String clearTextFeild = "";
 
+String sentViaWhatsapp = "Sent via Whatsapp 🤳";
+String sentViaEmail = "Sent via Email 📬";
+String sentViaSms = "Sent via SMS 💌";
+String sentMethod = "";
+
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController cardCodeController = TextEditingController();
@@ -69,14 +74,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     getNoteControllerPrefeData().then(noteControllerTrans);
     getDatePrefeData().then(getDateTrans);
     getCardRegionPrefeData().then(getCardRegionTrans);
+    getSentMethodPrefeData().then(getSentMethodTrans);
     super.initState();
-  }
-
-  void whatsAppOpen() async {
-    await FlutterLaunch.launchWathsApp(
-        phone: "+964${phoneNumberController.text}",
-        message:
-            "Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}");
   }
 
   void getContactPhoneNubmer(context) async {
@@ -95,16 +94,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  smsOpen() async {
-    String uri =
-        'sms:+964${phoneNumberController.text}?body=Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}';
-    if (await canLaunch(uri)) {
-      await launch(uri);
-    } else {
-      throw 'Could not launch $uri';
-    }
-  }
-
   emailOpen() async {
     var url =
         'mailto:${mailtoController.text}?subject=${subjectController.text}&body=Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}';
@@ -112,6 +101,23 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       await launch(url);
     } else {
       throw 'Could not launch $url';
+    }
+  }
+
+  void whatsAppOpen() async {
+    await FlutterLaunch.launchWathsApp(
+        phone: "+964${phoneNumberController.text}",
+        message:
+            "Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}");
+  }
+
+  smsOpen() async {
+    String uri =
+        'sms:+964${phoneNumberController.text}?body=Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}';
+    if (await canLaunch(uri)) {
+      await launch(uri);
+    } else {
+      throw 'Could not launch $uri';
     }
   }
 
@@ -233,6 +239,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.setString('noteControllerPrefeValue', "${noteController.text}");
     prefs.setString('getDatePrefeValue', "$getDate");
     prefs.setString('cardReagionPrefeValue', "$cardReagion");
+    prefs.setString('sentMethodPrefeValue', "$sentMethod");
     return "Data Saved";
   }
 
@@ -245,6 +252,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.remove("noteControllerPrefeValue");
     prefs.remove("getDatePrefeValue");
     prefs.remove("cardReagionPrefeValue");
+    prefs.remove("sentMethodPrefeValue");
     return "Data Removed";
   }
 
@@ -293,6 +301,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return cardReagionPrefeValue;
   }
 
+  Future<String> getSentMethodPrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String sentMethodPrefeValue = prefs.getString('sentMethodPrefeValue');
+    return sentMethodPrefeValue;
+  }
+
   String getDate = (DateFormat.yMd().add_jm().format(DateTime.now()));
   String getDatePrefe;
   String phoneControllerPrefe;
@@ -301,6 +315,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String cardControllerPrefe;
   String noteControllerPrefe;
   String cardReagionPrefe;
+  String sentMethodPrefe;
 
   void phoneControllerTrans(String phoneControllerPrefeValue) {
     setState(() {
@@ -375,6 +390,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         cardReagionPrefe = clearTextFeild;
       } else {
         cardReagionPrefe = getCardRegionPrefeData;
+      }
+    });
+  }
+
+  void getSentMethodTrans(String getSentMethodPrefeData) {
+    setState(() {
+      sentMethodPrefe = getSentMethodPrefeData;
+      if (sentMethodPrefe == null) {
+        sentMethodPrefe = clearTextFeild;
+      } else {
+        sentMethodPrefe = getSentMethodPrefeData;
       }
     });
   }
@@ -931,6 +957,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                   emailOpen();
                                                   Navigator.of(context).pop();
                                                   refreshPage();
+                                                  sentMethod = sentViaEmail;
                                                 }
                                               },
                                               color: Colors.red,
@@ -1014,6 +1041,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           } else {
                             whatsAppOpen();
                             refreshPage();
+                            sentMethod = sentViaWhatsapp;
                           }
                         },
                         color: Colors.red,
@@ -1040,6 +1068,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           } else {
                             smsOpen();
                             refreshPage();
+                            sentMethod = sentViaSms;
                           }
                         },
                         color: Colors.red,
@@ -1093,11 +1122,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Text(
-                              "$getDatePrefe",
+                              "$sentMethodPrefe\n$getDatePrefe",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontStyle: FontStyle.italic,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),

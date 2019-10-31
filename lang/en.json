@@ -17,7 +17,7 @@
   "your_card_type": "Your Card Type is:",
   "your_card_amount": "Your Card Amount is:",
   "card_code": "Card Code is:",
-  "note": "Note:",
+  "note": "Notes:",
   "hint_text": "Hint: Double tap on the text to COPY",
   "email_button": "Email",
   "whatsapp_button": "Whatsapp",
@@ -44,5 +44,7 @@
   "clear_cash": "Clear Cashe",
   "refresh_page": "Refresh page",
   "card_reagion": "Card Reagion:",
-  "validator_text": "Form field is empty"
+  "sent_whatsapp": "Sent via Whatsapp",
+  "sent_sms": "Sent via SMS",
+  "sent_email": "Sent via Email"
 }
