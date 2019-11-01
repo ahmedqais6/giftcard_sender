@@ -583,7 +583,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         validator: (value) {
                           if (value.isEmpty) {
                             return AppLocalizations.of(context)
-                                .translate('validator_text');
+                                .translate('validat_phone_number_field_empty');
                           }
                           return null;
                         },
@@ -627,7 +627,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         validator: (value) {
                           if (value.isEmpty) {
                             return AppLocalizations.of(context)
-                                .translate('validator_text');
+                                .translate('validat_card_number_field_empty');
                           }
                           return null;
                         },
@@ -868,7 +868,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             if (value.isEmpty) {
                                               return AppLocalizations.of(
                                                       context)
-                                                  .translate('validator_text');
+                                                  .translate('validat_mailto');
                                             }
                                             return null;
                                           },
@@ -911,7 +911,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             if (value.isEmpty) {
                                               return AppLocalizations.of(
                                                       context)
-                                                  .translate('validator_text');
+                                                  .translate('validat_subject');
                                             }
                                             return null;
                                           },
@@ -1195,7 +1195,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             if (value.isEmpty) {
                                               return AppLocalizations.of(
                                                       context)
-                                                  .translate('validator_text');
+                                                  .translate('validat_pin');
                                             }
                                             return null;
                                           },

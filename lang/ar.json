@@ -29,8 +29,8 @@
   "choose_contact": "أختر أسم",
   "clear": "امسح",
   "alert": "أنتبة",
-  "phone_number_field_empty": "حقل رقم الهاتف او الكود فارغ",
-  "card_number_field_empty": "حقل رقم الكود فارغ",
+  "validat_phone_number_field_empty": "حقل رقم الهاتف او الكود فارغ",
+  "validat_card_number_field_empty": "حقل رقم الكود فارغ",
   "ok": "حسناً",
   "transaction": "العمليات التجارية",
   "send": "أرسال",
@@ -44,8 +44,10 @@
   "clear_cash": "حذف السجلات",
   "refresh_page": "تنشيط الصفحة",
   "card_reagion": "دولة البطاقة:",
-  "validator_text": "الحقل فارغ",
+  "validat_pin": "الحقل فارغ",
   "sent_whatsapp": "ارسلت بواسطة الواتساب",
   "sent_sms": "ارسلة بواسطة رسالة نصية",
-  "sent_email": "ارسلت بواسطة البريد الألكتروني"
+  "sent_email": "ارسلت بواسطة البريد الألكتروني",
+  "validat_mailto": "حقل عنوان المرسل فارغ",
+  "validat_subject": "حقل عنوان البريد فارغ"
 }
