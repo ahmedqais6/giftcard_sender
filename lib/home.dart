@@ -19,7 +19,7 @@ String cardAmount = '\$5';
 String cardReagion = 'Region All';
 String clearTextFeild = "";
 
-String sentViaWhatsapp = "Sent via Whatsapp 🤳";
+String sentViaWhatsapp = "Sent via Whatsapp 💚";
 String sentViaEmail = "Sent via Email 📬";
 String sentViaSms = "Sent via SMS 💌";
 String sentMethod = "";
@@ -782,9 +782,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         var connectivityResult =
                             await (Connectivity().checkConnectivity());
 
-                        if (phoneNumberController.text.isEmpty ||
-                            cardCodeController.text.isEmpty) {
-                          phoneNumberFormKey.currentState.validate();
+                        if (cardCodeController.text.isEmpty) {
                           cardCodeFormKey.currentState.validate();
                         } else if (connectivityResult ==
                             ConnectivityResult.none) {
@@ -954,10 +952,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                       .validate();
                                                 } else {
                                                   saveData();
+                                                  sentMethod = sentViaEmail;
                                                   emailOpen();
                                                   Navigator.of(context).pop();
                                                   refreshPage();
-                                                  sentMethod = sentViaEmail;
                                                 }
                                               },
                                               color: Colors.red,
@@ -998,6 +996,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     OutlineButton(
                         onPressed: () async {
                           saveData();
+                          sentMethod = sentViaWhatsapp;
                           var connectivityResult =
                               await (Connectivity().checkConnectivity());
                           if (phoneNumberController.text.isEmpty ||
@@ -1041,7 +1040,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           } else {
                             whatsAppOpen();
                             refreshPage();
-                            sentMethod = sentViaWhatsapp;
                           }
                         },
                         color: Colors.red,
@@ -1061,6 +1059,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     OutlineButton(
                         onPressed: () {
                           saveData();
+                          sentMethod = sentViaSms;
                           if (phoneNumberController.text.isEmpty ||
                               cardCodeController.text.isEmpty) {
                             phoneNumberFormKey.currentState.validate();
@@ -1068,7 +1067,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           } else {
                             smsOpen();
                             refreshPage();
-                            sentMethod = sentViaSms;
                           }
                         },
                         color: Colors.red,
