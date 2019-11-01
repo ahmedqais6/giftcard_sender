@@ -29,8 +29,8 @@
   "choose_contact": "Choose Contact",
   "clear": "Clear",
   "alert": "Alert",
-  "phone_number_field_empty": "Phone number or card field is empty",
-  "card_number_field_empty": "Card number field is empty",
+  "validat_phone_number_field_empty": "Phone number or card field is empty",
+  "validat_card_number_field_empty": "Card number field is empty",
   "ok": "OK",
   "transaction": "Transaction",
   "send": "Send",
@@ -41,10 +41,15 @@
   "open_wifi": "WiFi Settings",
   "pin_message": "Please enter the PIN code to clear the cashes",
   "pin_enter": "Enter PIN",
-  "clear_cash": "Clear Cashe",
+  "clear_cashe": "Clear Cashe",
   "refresh_page": "Refresh page",
   "card_reagion": "Card Reagion:",
+  "validat_pin": "PIN field is empty",
   "sent_whatsapp": "Sent via Whatsapp",
   "sent_sms": "Sent via SMS",
-  "sent_email": "Sent via Email"
+  "sent_email": "Sent via Email",
+  "validat_mailto": "Mailto field is empty",
+  "validat_subject": "Subject field is empty",
+  "customer_email": "Customer Email is:",
+  "last_cashe_clear": "Last cashe cleard in"
 }
