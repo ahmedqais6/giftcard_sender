@@ -49,5 +49,7 @@
   "sent_sms": "Sent via SMS",
   "sent_email": "Sent via Email",
   "validat_mailto": "Mailto field is empty",
-  "validat_subject": "Subject field is empty"
+  "validat_subject": "Subject field is empty",
+  "customer_email": "Customer Email is:",
+  "last_cash_clear": "Last cash cleard in"
 }

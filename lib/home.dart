@@ -75,6 +75,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     getDatePrefeData().then(getDateTrans);
     getCardRegionPrefeData().then(getCardRegionTrans);
     getSentMethodPrefeData().then(getSentMethodTrans);
+    getMailtoControllerPrefeData().then(mailtoControllerTrans);
+    getDateForCashPrefeData().then(getDateForCashTrans);
     super.initState();
   }
 
@@ -229,6 +231,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
 // Shared Preferences start here.
+
+  Future<String> saveDataForCash() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('getDateForCashPrefeValue', "$getDateForCash");
+    return "Data Saved";
+  }
+
   Future<String> saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
@@ -240,6 +249,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.setString('getDatePrefeValue', "$getDate");
     prefs.setString('cardReagionPrefeValue', "$cardReagion");
     prefs.setString('sentMethodPrefeValue', "$sentMethod");
+    prefs.setString('mailtoControllerPrefeValue', "${mailtoController.text}");
     return "Data Saved";
   }
 
@@ -253,6 +263,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.remove("getDatePrefeValue");
     prefs.remove("cardReagionPrefeValue");
     prefs.remove("sentMethodPrefeValue");
+    prefs.remove("mailtoControllerPrefeValue");
     return "Data Removed";
   }
 
@@ -307,8 +318,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return sentMethodPrefeValue;
   }
 
+  Future<String> getMailtoControllerPrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String mailtoControllerPrefeValue =
+        prefs.getString('mailtoControllerPrefeValue');
+    return mailtoControllerPrefeValue;
+  }
+
+  Future<String> getDateForCashPrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String getDateForCashPrefeValue =
+        prefs.getString('getDateForCashPrefeValue');
+    return getDateForCashPrefeValue;
+  }
+
   String getDate = (DateFormat.yMd().add_jm().format(DateTime.now()));
+  String getDateForCash = (DateFormat.yMd().add_jm().format(DateTime.now()));
   String getDatePrefe;
+  String getDateForCashPrefe;
   String phoneControllerPrefe;
   String cardTypePrefe;
   String cardAmountPrefe;
@@ -316,6 +343,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String noteControllerPrefe;
   String cardReagionPrefe;
   String sentMethodPrefe;
+  String mailtoPrefe;
 
   void phoneControllerTrans(String phoneControllerPrefeValue) {
     setState(() {
@@ -401,6 +429,28 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         sentMethodPrefe = clearTextFeild;
       } else {
         sentMethodPrefe = getSentMethodPrefeData;
+      }
+    });
+  }
+
+  void mailtoControllerTrans(String mailtoControllerPrefeValue) {
+    setState(() {
+      mailtoPrefe = mailtoControllerPrefeValue;
+      if (mailtoPrefe == null) {
+        mailtoPrefe = clearTextFeild;
+      } else {
+        mailtoPrefe = mailtoControllerPrefeValue;
+      }
+    });
+  }
+
+  void getDateForCashTrans(String getDateForCashPrefeValue) {
+    setState(() {
+      getDateForCashPrefe = getDateForCashPrefeValue;
+      if (getDateForCashPrefe == null) {
+        getDateForCashPrefe = clearTextFeild;
+      } else {
+        getDateForCashPrefe = getDateForCashPrefeValue;
       }
     });
   }
@@ -1098,7 +1148,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         padding: const EdgeInsets.all(20.0),
                         child: SelectableText(
                           "${AppLocalizations.of(context).translate('customer_phone_number')}"
-                          " $phoneControllerPrefe\n\n"
+                          " $phoneControllerPrefe\n"
+                          "${AppLocalizations.of(context).translate('customer_email')}"
+                          " $mailtoPrefe\n\n"
                           "${AppLocalizations.of(context).translate('your_card_type')}"
                           " $cardTypePrefe \n"
                           "${AppLocalizations.of(context).translate('your_card_amount')}"
@@ -1228,6 +1280,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                   if (pinNumberController
                                                           .text ==
                                                       "0000") {
+                                                    saveDataForCash();
                                                     removeData();
                                                     pinNumberController.text =
                                                         "";
@@ -1265,6 +1318,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         borderSide: BorderSide(color: Colors.blueAccent),
                         shape: StadiumBorder()),
                   ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "${AppLocalizations.of(context).translate('last_cash_clear')}"
+                  "\n$getDateForCashPrefe",
+                  style: TextStyle(
+                      color: Colors.grey[700], fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
               ],
             )
