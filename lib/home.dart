@@ -75,6 +75,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     getDatePrefeData().then(getDateTrans);
     getCardRegionPrefeData().then(getCardRegionTrans);
     getSentMethodPrefeData().then(getSentMethodTrans);
+    getMailtoControllerPrefeData().then(mailtoControllerTrans);
+    getDateForCashePrefeData().then(getDateForCasheTrans);
     super.initState();
   }
 
@@ -229,6 +231,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
 // Shared Preferences start here.
+
+  Future<String> saveDataForCashe() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('getDateForCashePrefeValue', "$getDateForCashe");
+    return "Data Saved";
+  }
+
   Future<String> saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
@@ -240,6 +249,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.setString('getDatePrefeValue', "$getDate");
     prefs.setString('cardReagionPrefeValue', "$cardReagion");
     prefs.setString('sentMethodPrefeValue', "$sentMethod");
+    prefs.setString('mailtoControllerPrefeValue', "${mailtoController.text}");
     return "Data Saved";
   }
 
@@ -253,6 +263,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.remove("getDatePrefeValue");
     prefs.remove("cardReagionPrefeValue");
     prefs.remove("sentMethodPrefeValue");
+    prefs.remove("mailtoControllerPrefeValue");
     return "Data Removed";
   }
 
@@ -307,8 +318,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return sentMethodPrefeValue;
   }
 
+  Future<String> getMailtoControllerPrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String mailtoControllerPrefeValue =
+        prefs.getString('mailtoControllerPrefeValue');
+    return mailtoControllerPrefeValue;
+  }
+
+  Future<String> getDateForCashePrefeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String getDateForCashePrefeValue =
+        prefs.getString('getDateForCashePrefeValue');
+    return getDateForCashePrefeValue;
+  }
+
   String getDate = (DateFormat.yMd().add_jm().format(DateTime.now()));
+  String getDateForCashe = (DateFormat.yMd().add_jm().format(DateTime.now()));
   String getDatePrefe;
+  String getDateForCashePrefe;
   String phoneControllerPrefe;
   String cardTypePrefe;
   String cardAmountPrefe;
@@ -316,6 +343,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   String noteControllerPrefe;
   String cardReagionPrefe;
   String sentMethodPrefe;
+  String mailtoPrefe;
 
   void phoneControllerTrans(String phoneControllerPrefeValue) {
     setState(() {
@@ -401,6 +429,28 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         sentMethodPrefe = clearTextFeild;
       } else {
         sentMethodPrefe = getSentMethodPrefeData;
+      }
+    });
+  }
+
+  void mailtoControllerTrans(String mailtoControllerPrefeValue) {
+    setState(() {
+      mailtoPrefe = mailtoControllerPrefeValue;
+      if (mailtoPrefe == null) {
+        mailtoPrefe = clearTextFeild;
+      } else {
+        mailtoPrefe = mailtoControllerPrefeValue;
+      }
+    });
+  }
+
+  void getDateForCasheTrans(String getDateForCashePrefeValue) {
+    setState(() {
+      getDateForCashePrefe = getDateForCashePrefeValue;
+      if (getDateForCashePrefe == null) {
+        getDateForCashePrefe = clearTextFeild;
+      } else {
+        getDateForCashePrefe = getDateForCashePrefeValue;
       }
     });
   }
@@ -583,7 +633,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         validator: (value) {
                           if (value.isEmpty) {
                             return AppLocalizations.of(context)
-                                .translate('validator_text');
+                                .translate('validat_phone_number_field_empty');
                           }
                           return null;
                         },
@@ -627,7 +677,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         validator: (value) {
                           if (value.isEmpty) {
                             return AppLocalizations.of(context)
-                                .translate('validator_text');
+                                .translate('validat_card_number_field_empty');
                           }
                           return null;
                         },
@@ -868,7 +918,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             if (value.isEmpty) {
                                               return AppLocalizations.of(
                                                       context)
-                                                  .translate('validator_text');
+                                                  .translate('validat_mailto');
                                             }
                                             return null;
                                           },
@@ -911,7 +961,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             if (value.isEmpty) {
                                               return AppLocalizations.of(
                                                       context)
-                                                  .translate('validator_text');
+                                                  .translate('validat_subject');
                                             }
                                             return null;
                                           },
@@ -1098,7 +1148,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         padding: const EdgeInsets.all(20.0),
                         child: SelectableText(
                           "${AppLocalizations.of(context).translate('customer_phone_number')}"
-                          " $phoneControllerPrefe\n\n"
+                          " $phoneControllerPrefe\n"
+                          "${AppLocalizations.of(context).translate('customer_email')}"
+                          " $mailtoPrefe\n\n"
                           "${AppLocalizations.of(context).translate('your_card_type')}"
                           " $cardTypePrefe \n"
                           "${AppLocalizations.of(context).translate('your_card_amount')}"
@@ -1195,7 +1247,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             if (value.isEmpty) {
                                               return AppLocalizations.of(
                                                       context)
-                                                  .translate('validator_text');
+                                                  .translate('validat_pin');
                                             }
                                             return null;
                                           },
@@ -1228,6 +1280,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                   if (pinNumberController
                                                           .text ==
                                                       "0000") {
+                                                    saveDataForCashe();
                                                     removeData();
                                                     pinNumberController.text =
                                                         "";
@@ -1256,7 +1309,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         },
                         color: Colors.red,
                         child: Text(
-                          AppLocalizations.of(context).translate('clear_cash'),
+                          AppLocalizations.of(context).translate('clear_cashe'),
                           style: TextStyle(
                               color: Colors.blueAccent,
                               fontWeight: FontWeight.w900,
@@ -1265,6 +1318,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         borderSide: BorderSide(color: Colors.blueAccent),
                         shape: StadiumBorder()),
                   ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "${AppLocalizations.of(context).translate('last_cashe_clear')}"
+                  "\n$getDateForCashePrefe",
+                  style: TextStyle(
+                      color: Colors.grey[700], fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
               ],
             )
