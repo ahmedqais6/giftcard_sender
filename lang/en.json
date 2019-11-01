@@ -41,7 +41,7 @@
   "open_wifi": "WiFi Settings",
   "pin_message": "Please enter the PIN code to clear the cashes",
   "pin_enter": "Enter PIN",
-  "clear_cash": "Clear Cashe",
+  "clear_cashe": "Clear Cashe",
   "refresh_page": "Refresh page",
   "card_reagion": "Card Reagion:",
   "validat_pin": "PIN field is empty",
@@ -51,5 +51,5 @@
   "validat_mailto": "Mailto field is empty",
   "validat_subject": "Subject field is empty",
   "customer_email": "Customer Email is:",
-  "last_cash_clear": "Last cash cleard in"
+  "last_cashe_clear": "Last cashe cleard in"
 }

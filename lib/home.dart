@@ -76,7 +76,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     getCardRegionPrefeData().then(getCardRegionTrans);
     getSentMethodPrefeData().then(getSentMethodTrans);
     getMailtoControllerPrefeData().then(mailtoControllerTrans);
-    getDateForCashPrefeData().then(getDateForCashTrans);
+    getDateForCashePrefeData().then(getDateForCasheTrans);
     super.initState();
   }
 
@@ -232,9 +232,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
 // Shared Preferences start here.
 
-  Future<String> saveDataForCash() async {
+  Future<String> saveDataForCashe() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('getDateForCashPrefeValue', "$getDateForCash");
+    prefs.setString('getDateForCashePrefeValue', "$getDateForCashe");
     return "Data Saved";
   }
 
@@ -325,17 +325,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return mailtoControllerPrefeValue;
   }
 
-  Future<String> getDateForCashPrefeData() async {
+  Future<String> getDateForCashePrefeData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String getDateForCashPrefeValue =
-        prefs.getString('getDateForCashPrefeValue');
-    return getDateForCashPrefeValue;
+    String getDateForCashePrefeValue =
+        prefs.getString('getDateForCashePrefeValue');
+    return getDateForCashePrefeValue;
   }
 
   String getDate = (DateFormat.yMd().add_jm().format(DateTime.now()));
-  String getDateForCash = (DateFormat.yMd().add_jm().format(DateTime.now()));
+  String getDateForCashe = (DateFormat.yMd().add_jm().format(DateTime.now()));
   String getDatePrefe;
-  String getDateForCashPrefe;
+  String getDateForCashePrefe;
   String phoneControllerPrefe;
   String cardTypePrefe;
   String cardAmountPrefe;
@@ -444,13 +444,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
   }
 
-  void getDateForCashTrans(String getDateForCashPrefeValue) {
+  void getDateForCasheTrans(String getDateForCashePrefeValue) {
     setState(() {
-      getDateForCashPrefe = getDateForCashPrefeValue;
-      if (getDateForCashPrefe == null) {
-        getDateForCashPrefe = clearTextFeild;
+      getDateForCashePrefe = getDateForCashePrefeValue;
+      if (getDateForCashePrefe == null) {
+        getDateForCashePrefe = clearTextFeild;
       } else {
-        getDateForCashPrefe = getDateForCashPrefeValue;
+        getDateForCashePrefe = getDateForCashePrefeValue;
       }
     });
   }
@@ -1280,7 +1280,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                   if (pinNumberController
                                                           .text ==
                                                       "0000") {
-                                                    saveDataForCash();
+                                                    saveDataForCashe();
                                                     removeData();
                                                     pinNumberController.text =
                                                         "";
@@ -1309,7 +1309,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         },
                         color: Colors.red,
                         child: Text(
-                          AppLocalizations.of(context).translate('clear_cash'),
+                          AppLocalizations.of(context).translate('clear_cashe'),
                           style: TextStyle(
                               color: Colors.blueAccent,
                               fontWeight: FontWeight.w900,
@@ -1323,8 +1323,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   height: 5,
                 ),
                 Text(
-                  "${AppLocalizations.of(context).translate('last_cash_clear')}"
-                  "\n$getDateForCashPrefe",
+                  "${AppLocalizations.of(context).translate('last_cashe_clear')}"
+                  "\n$getDateForCashePrefe",
                   style: TextStyle(
                       color: Colors.grey[700], fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,

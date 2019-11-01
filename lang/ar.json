@@ -41,7 +41,7 @@
   "open_wifi": "اعدادات الواي فاي",
   "pin_message": "لطفاً ادخل الرقم السري لحذف السجلات",
   "pin_enter": "ادخل الرقم السري",
-  "clear_cash": "حذف السجلات",
+  "clear_cashe": "حذف السجلات",
   "refresh_page": "تنشيط الصفحة",
   "card_reagion": "دولة البطاقة:",
   "validat_pin": "الحقل فارغ",
@@ -51,5 +51,5 @@
   "validat_mailto": "حقل عنوان المرسل فارغ",
   "validat_subject": "حقل عنوان البريد فارغ",
   "customer_email": "البريد الألكتروني للزبون",
-  "last_cash_clear": "اخر مسح للسجل في"
+  "last_cashe_clear": "اخر مسح للسجل في"
 }
