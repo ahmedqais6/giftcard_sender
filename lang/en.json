@@ -29,7 +29,8 @@
   "choose_contact": "Choose Contact",
   "clear": "Clear",
   "alert": "Alert",
-  "validat_phone_number_field_empty": "Phone number or card field is empty",
+  "validat_phone_number_field_empty": "Phone number field is empty",
+  "validat_phone_number_field_must_11": "Phone number field must be 11 degits",
   "validat_card_number_field_empty": "Card number field is empty",
   "ok": "OK",
   "transaction": "Transaction",
@@ -51,5 +52,6 @@
   "validat_mailto": "Mailto field is empty",
   "validat_subject": "Subject field is empty",
   "customer_email": "Customer Email is:",
-  "last_cashe_clear": "Last cashe cleard in"
+  "last_cashe_clear": "Last cashe cleard in",
+  "add_note_hintText": "Type a note for the customer"
 }
