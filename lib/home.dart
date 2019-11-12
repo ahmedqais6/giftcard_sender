@@ -59,6 +59,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     '\$100'
   ];
   List<String> regionType = ['Region All', 'USA', 'EU', 'UAE'];
+
   final ContactPicker _contactPickerBusinessLogin = new ContactPicker();
   TabController _tabController;
 
@@ -66,7 +67,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   initState() {
     checkConnectivity();
     _tabController = TabController(length: 2, vsync: this);
-    // Shared Preference
+    // Shared Preference TODO
     getPhoneControllerData().then(phoneControllerTrans);
     getCardTypeData().then(cardTypeTrans);
     getCardAmountData().then(cardAmountTrans);
@@ -240,7 +241,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
 // Shared Preferences start here.
-
   Future<String> saveDataForCashe() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('getDateForCashePrefeValue', "$getDateForCashe");
@@ -273,7 +273,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     prefs.remove("cardReagionPrefeValue");
     prefs.remove("sentMethodPrefeValue");
     prefs.remove("mailtoControllerPrefeValue");
-    return "Data Removed";
+    return "Data Saved";
   }
 
   Future<String> getPhoneControllerData() async {
@@ -619,30 +619,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         keyboardType: TextInputType.number,
                         maxLength: 11,
                         decoration: new InputDecoration(
-                            border: new OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(14.0),
-                              ),
+                          border: new OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(14.0),
                             ),
-                            labelText: AppLocalizations.of(context)
-                                .translate('enter_phone_number'),
-                            hintText: "07xxxxxxxxx",
-                            suffixText: AppLocalizations.of(context)
-                                .translate('choose_contact'),
-                            suffixIcon: Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.only(end: 12.0),
-                              child: IconButton(
-                                icon: Icon(Icons.contacts),
-                                onPressed: () {
-                                  getContactPhoneNubmer(context);
-                                },
-                              ),
-                            )),
+                          ),
+                          labelText: AppLocalizations.of(context)
+                              .translate('enter_phone_number'),
+                          hintText: "07xxxxxxxxx",
+                          suffixText: AppLocalizations.of(context)
+                              .translate('choose_contact'),
+                          suffixIcon: Padding(
+                            padding:
+                                const EdgeInsetsDirectional.only(end: 12.0),
+                            child: IconButton(
+                              icon: Icon(Icons.contacts),
+                              onPressed: () {
+                                getContactPhoneNubmer(context);
+                              },
+                            ),
+                          ),
+                        ),
                         validator: (value) {
                           if (value.isEmpty) {
                             return AppLocalizations.of(context)
                                 .translate('validat_phone_number_field_empty');
+                          } else if (value.length != 11) {
+                            return AppLocalizations.of(context).translate(
+                                'validat_phone_number_field_must_11');
                           }
                           return null;
                         },
@@ -663,26 +667,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         maxLength: 20,
                         keyboardType: TextInputType.text,
                         decoration: new InputDecoration(
-                            border: new OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(14.0),
-                              ),
+                          border: new OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(14.0),
                             ),
-                            labelText: AppLocalizations.of(context)
-                                .translate('enter_card_code'),
-                            hintText: "XXXX-XXXX-XXXX",
-                            suffixText:
-                                AppLocalizations.of(context).translate('clear'),
-                            suffixIcon: Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.only(end: 12.0),
-                              child: IconButton(
-                                icon: Icon(Icons.cancel),
-                                onPressed: () {
-                                  cardCodeController.text = clearTextFeild;
-                                },
-                              ),
-                            )),
+                          ),
+                          labelText: AppLocalizations.of(context)
+                              .translate('enter_card_code'),
+                          hintText: "XXXX-XXXX-XXXX",
+                          suffixText:
+                              AppLocalizations.of(context).translate('clear'),
+                          suffixIcon: Padding(
+                            padding:
+                                const EdgeInsetsDirectional.only(end: 12.0),
+                            child: IconButton(
+                              icon: Icon(Icons.cancel),
+                              onPressed: () {
+                                cardCodeController.text = clearTextFeild;
+                              },
+                            ),
+                          ),
+                        ),
                         validator: (value) {
                           if (value.isEmpty) {
                             return AppLocalizations.of(context)
@@ -704,25 +709,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       controller: noteController,
                       keyboardType: TextInputType.text,
                       decoration: new InputDecoration(
-                          border: new OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(14.0),
-                            ),
+                        border: new OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(14.0),
                           ),
-                          labelText: AppLocalizations.of(context)
-                              .translate('add_note_optional'),
-                          suffixText:
-                              AppLocalizations.of(context).translate('clear'),
-                          suffixIcon: Padding(
-                            padding:
-                                const EdgeInsetsDirectional.only(end: 12.0),
-                            child: IconButton(
-                              icon: Icon(Icons.cancel),
-                              onPressed: () {
-                                noteController.text = clearTextFeild;
-                              },
-                            ),
-                          )),
+                        ),
+                        labelText: AppLocalizations.of(context)
+                            .translate('add_note_optional'),
+                        hintText: AppLocalizations.of(context)
+                            .translate('add_note_hintText'),
+                        suffixText:
+                            AppLocalizations.of(context).translate('clear'),
+                        suffixIcon: Padding(
+                          padding: const EdgeInsetsDirectional.only(end: 12.0),
+                          child: IconButton(
+                            icon: Icon(Icons.cancel),
+                            onPressed: () {
+                              noteController.text = clearTextFeild;
+                            },
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -902,27 +909,28 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                           controller: mailtoController,
                                           keyboardType: TextInputType.text,
                                           decoration: new InputDecoration(
-                                              border: new OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(14.0),
-                                                ),
+                                            border: new OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(14.0),
                                               ),
-                                              labelText:
-                                                  AppLocalizations.of(context)
-                                                      .translate('mailto'),
-                                              hintText: "email@email.com",
-                                              suffixIcon: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .only(end: 12.0),
-                                                child: IconButton(
-                                                  icon: Icon(Icons.cancel),
-                                                  onPressed: () {
-                                                    mailtoController.text =
-                                                        clearTextFeild;
-                                                  },
-                                                ),
-                                              )),
+                                            ),
+                                            labelText:
+                                                AppLocalizations.of(context)
+                                                    .translate('mailto'),
+                                            hintText: "email@email.com",
+                                            suffixIcon: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .only(end: 12.0),
+                                              child: IconButton(
+                                                icon: Icon(Icons.cancel),
+                                                onPressed: () {
+                                                  mailtoController.text =
+                                                      clearTextFeild;
+                                                },
+                                              ),
+                                            ),
+                                          ),
                                           validator: (value) {
                                             if (value.isEmpty) {
                                               return AppLocalizations.of(
@@ -1117,9 +1125,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                     OutlineButton(
                         onPressed: () {
-                          saveData();
+                          saveData(); //TODO
                           sentMethod = sentViaSms;
                           if (phoneNumberController.text.isEmpty ||
+                              phoneNumberController.text.length != 11 ||
                               cardCodeController.text.isEmpty) {
                             phoneNumberFormKey.currentState.validate();
                             cardCodeFormKey.currentState.validate();
