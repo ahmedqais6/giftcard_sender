@@ -25,12 +25,12 @@ String sentViaSms = "Sent via SMS 💌";
 String sentMethod = "";
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController cardCodeController = TextEditingController();
-  final TextEditingController noteController = TextEditingController();
-  final TextEditingController mailtoController = TextEditingController();
-  final TextEditingController subjectController = TextEditingController();
-  final TextEditingController pinNumberController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final cardCodeController = TextEditingController();
+  final noteController = TextEditingController();
+  final mailtoController = TextEditingController();
+  final subjectController = TextEditingController();
+  final pinNumberController = TextEditingController();
 
   final clearCasheFormKey = GlobalKey<FormState>();
   final phoneNumberFormKey = GlobalKey<FormState>();
@@ -91,14 +91,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         .replaceAll("+ 964", "0")
         .replaceAll(RegExp(r'\+964'), "0");
     phoneNumberController.text = tempPhoneNumber;
-    if (contact.phoneNumber.number == null) {
-      smsOpen();
-    }
   }
 
-  emailOpen() async {
+  void emailOpen() async {
     var url =
-        'mailto:${mailtoController.text}?subject=${subjectController.text}&body=Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}';
+        "mailto:${mailtoController.text}?subject=${subjectController.text}&body="
+        "Your Card Type is: $cardType"
+        "\nYour Card Amount is: $cardAmount"
+        "\nCard Code is: ${cardCodeController.text}"
+        "\nCard Reagion: $cardReagion"
+        "\nNote: ${noteController.text}";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -109,13 +111,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void whatsAppOpen() async {
     await FlutterLaunch.launchWathsApp(
         phone: "+964${phoneNumberController.text}",
-        message:
-            "Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}");
+        message: "Your Card Type is: $cardType"
+            "\nYour Card Amount is: $cardAmount"
+            "\nCard Code is: ${cardCodeController.text}"
+            "\nCard Reagion: $cardReagion"
+            "\nNote: ${noteController.text}");
   }
 
-  smsOpen() async {
-    String uri =
-        'sms:+964${phoneNumberController.text}?body=Your Card Type is: $cardType \nYour Card Amount is: $cardAmount \nCard Code is: ${cardCodeController.text} \nCard Reagion: $cardReagion \nNote: ${noteController.text}';
+  void smsOpen() async {
+    String uri = "sms:+964${phoneNumberController.text}?body="
+        "Your Card Type is: $cardType"
+        "\nYour Card Amount is: $cardAmount"
+        "\nCard Code is: ${cardCodeController.text}"
+        "\nCard Reagion: $cardReagion"
+        "\nNote: ${noteController.text}";
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
@@ -1130,9 +1139,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         borderSide: BorderSide(color: Colors.orange),
                         shape: StadiumBorder()),
                   ],
-                ),
-                Divider(
-                  height: 30,
                 ),
               ],
             ),
