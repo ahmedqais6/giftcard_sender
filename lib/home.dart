@@ -25,12 +25,12 @@ String sentViaSms = "Sent via SMS 💌";
 String sentMethod = "";
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController cardCodeController = TextEditingController();
-  final TextEditingController noteController = TextEditingController();
-  final TextEditingController mailtoController = TextEditingController();
-  final TextEditingController subjectController = TextEditingController();
-  final TextEditingController pinNumberController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final cardCodeController = TextEditingController();
+  final noteController = TextEditingController();
+  final mailtoController = TextEditingController();
+  final subjectController = TextEditingController();
+  final pinNumberController = TextEditingController();
 
   final clearCasheFormKey = GlobalKey<FormState>();
   final phoneNumberFormKey = GlobalKey<FormState>();
