@@ -67,7 +67,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   initState() {
     checkConnectivity();
     _tabController = TabController(length: 2, vsync: this);
-    // Shared Preference
+    // Shared Preference TODO
     getPhoneControllerData().then(phoneControllerTrans);
     getCardTypeData().then(cardTypeTrans);
     getCardAmountData().then(cardAmountTrans);
